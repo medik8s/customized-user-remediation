@@ -1,0 +1,61 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: ClusterServiceVersion
+metadata:
+  annotations:
+    alm-examples: '[]'
+    capabilities: Basic Install
+  name: customized-script-remediation.v0.0.0
+  namespace: placeholder
+spec:
+  apiservicedefinitions: {}
+  customresourcedefinitions:
+    owned:
+    - description: CustomizedScriptRemediation is the Schema for the customizedscriptremediations
+        API
+      displayName: Customized Script Remediation
+      kind: CustomizedScriptRemediation
+      name: customizedscriptremediations.customized-script-remediation.medik8s.io
+      version: v1alpha1
+    - description: CustomizedScriptRemediationTemplate is the Schema for the customizedscriptremediationtemplates
+        API
+      displayName: Customized Script Remediation Template
+      kind: CustomizedScriptRemediationTemplate
+      name: customizedscriptremediationtemplates.customized-script-remediation.medik8s.io
+      version: v1alpha1
+  description: TBD
+  displayName: Customized Script Remediation Operator
+  icon:
+  - base64data: ""
+    mediatype: ""
+  install:
+    spec:
+      deployments: null
+    strategy: ""
+  installModes:
+  - supported: false
+    type: OwnNamespace
+  - supported: false
+    type: SingleNamespace
+  - supported: false
+    type: MultiNamespace
+  - supported: true
+    type: AllNamespaces
+  keywords:
+  - remediation
+  - auto-healing
+  - recovery
+  - high-availability
+  - baremetal
+  - script
+  - CSR
+  links:
+  - name: Customized Script Remediation
+    url: https://customized-script-remediation.domain
+  maintainers:
+  - email: medik8s@googlegroups.com
+    name: Medik8s Team
+  maturity: alpha
+  provider:
+    name: Medik8s
+    url: https://www.medik8s.io/
+  version: 0.0.0
