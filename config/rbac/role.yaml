@@ -1,0 +1,59 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  creationTimestamp: null
+  name: manager-role
+rules:
+- apiGroups:
+  - customized-script-remediation.medik8s.io
+  resources:
+  - customizedscriptremediations
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - customized-script-remediation.medik8s.io
+  resources:
+  - customizedscriptremediations/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - customized-script-remediation.medik8s.io
+  resources:
+  - customizedscriptremediations/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - customized-script-remediation.medik8s.io
+  resources:
+  - customizedscriptremediationtemplates
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - customized-script-remediation.medik8s.io
+  resources:
+  - customizedscriptremediationtemplates/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - customized-script-remediation.medik8s.io
+  resources:
+  - customizedscriptremediationtemplates/status
+  verbs:
+  - get
+  - patch
+  - update
