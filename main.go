@@ -33,6 +33,7 @@ import (
 
 	customizedscriptremediationv1alpha1 "github.com/mshitrit/customized-script-remediation/api/v1alpha1"
 	"github.com/mshitrit/customized-script-remediation/controllers"
+
 	//+kubebuilder:scaffold:imports
 	"github.com/mshitrit/customized-script-remediation/pkg/script"
 )
@@ -90,7 +91,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	scriptManager := script.NewManager()
+	scriptManager := script.NewManager(mgr.GetClient())
 	if err = (&controllers.CustomizedScriptRemediationReconciler{
 		Client:  mgr.GetClient(),
 		Log:     ctrl.Log.WithName("controllers").WithName("CustomizedScriptRemediation"),

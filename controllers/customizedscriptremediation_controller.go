@@ -21,10 +21,12 @@ import (
 
 	"github.com/go-logr/logr"
 
+	apiErrors "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/log"
+	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 
 	customizedscriptremediationv1alpha1 "github.com/mshitrit/customized-script-remediation/api/v1alpha1"
 	"github.com/mshitrit/customized-script-remediation/pkg/script"
@@ -55,6 +57,22 @@ func (r *CustomizedScriptRemediationReconciler) Reconcile(ctx context.Context, r
 	_ = log.FromContext(ctx)
 
 	// TODO mshitrit continue here
+	csr := &customizedscriptremediationv1alpha1.CustomizedScriptRemediation{}
+	if err := r.Get(ctx, req.NamespacedName, csr); err != nil {
+		if apiErrors.IsNotFound(err) {
+			// SNR is deleted, stop reconciling
+			r.Log.Info("CSR already deleted")
+			return ctrl.Result{}, nil
+		}
+		r.Log.Error(err, "failed to get CSR")
+		return ctrl.Result{}, err
+	}
+
+	err := r.Manager.RunScriptAsJob(csr.Name)
+	if err != nil {
+		// Handle the error, possibly by logging or returning an error
+		return reconcile.Result{}, err
+	}
 
 	return ctrl.Result{}, nil
 }
