@@ -8,6 +8,32 @@ rules:
 - apiGroups:
   - customized-script-remediation.medik8s.io
   resources:
+  - customizedscriptremediationconfigs
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - customized-script-remediation.medik8s.io
+  resources:
+  - customizedscriptremediationconfigs/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - customized-script-remediation.medik8s.io
+  resources:
+  - customizedscriptremediationconfigs/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - customized-script-remediation.medik8s.io
+  resources:
   - customizedscriptremediations
   verbs:
   - create

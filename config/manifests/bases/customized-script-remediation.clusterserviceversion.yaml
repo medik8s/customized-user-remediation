@@ -10,6 +10,12 @@ spec:
   apiservicedefinitions: {}
   customresourcedefinitions:
     owned:
+    - description: CustomizedScriptRemediationConfig is the Schema for the customizedscriptremediationconfigs
+        API
+      displayName: Customized Script Remediation Config
+      kind: CustomizedScriptRemediationConfig
+      name: customizedscriptremediationconfigs.customized-script-remediation.medik8s.io
+      version: v1alpha1
     - description: CustomizedScriptRemediation is the Schema for the customizedscriptremediations
         API
       displayName: Customized Script Remediation

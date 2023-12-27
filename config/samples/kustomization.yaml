@@ -2,4 +2,5 @@
 resources:
 - customized-script-remediation_v1alpha1_customizedscriptremediation.yaml
 - customized-script-remediation_v1alpha1_customizedscriptremediationtemplate.yaml
+- customized-script-remediation_v1alpha1_customizedscriptremediationconfig.yaml
 #+kubebuilder:scaffold:manifestskustomizesamples

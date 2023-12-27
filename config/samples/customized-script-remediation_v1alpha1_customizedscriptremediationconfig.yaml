@@ -1,0 +1,12 @@
+apiVersion: customized-script-remediation.medik8s.io/v1alpha1
+kind: CustomizedScriptRemediationConfig
+metadata:
+  labels:
+    app.kubernetes.io/name: customizedscriptremediationconfig
+    app.kubernetes.io/instance: customizedscriptremediationconfig-sample
+    app.kubernetes.io/part-of: customized-script-remediation
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: customized-script-remediation
+  name: customizedscriptremediationconfig-sample
+spec:
+  # TODO(user): Add fields here

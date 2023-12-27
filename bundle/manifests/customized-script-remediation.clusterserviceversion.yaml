@@ -21,6 +21,21 @@ metadata:
         },
         {
           "apiVersion": "customized-script-remediation.medik8s.io/v1alpha1",
+          "kind": "CustomizedScriptRemediationConfig",
+          "metadata": {
+            "labels": {
+              "app.kubernetes.io/created-by": "customized-script-remediation",
+              "app.kubernetes.io/instance": "customizedscriptremediationconfig-sample",
+              "app.kubernetes.io/managed-by": "kustomize",
+              "app.kubernetes.io/name": "customizedscriptremediationconfig",
+              "app.kubernetes.io/part-of": "customized-script-remediation"
+            },
+            "name": "customizedscriptremediationconfig-sample"
+          },
+          "spec": null
+        },
+        {
+          "apiVersion": "customized-script-remediation.medik8s.io/v1alpha1",
           "kind": "CustomizedScriptRemediationTemplate",
           "metadata": {
             "labels": {
@@ -45,6 +60,12 @@ spec:
   apiservicedefinitions: {}
   customresourcedefinitions:
     owned:
+    - description: CustomizedScriptRemediationConfig is the Schema for the customizedscriptremediationconfigs
+        API
+      displayName: Customized Script Remediation Config
+      kind: CustomizedScriptRemediationConfig
+      name: customizedscriptremediationconfigs.customized-script-remediation.medik8s.io
+      version: v1alpha1
     - description: CustomizedScriptRemediation is the Schema for the customizedscriptremediations
         API
       displayName: Customized Script Remediation
@@ -70,6 +91,32 @@ spec:
     spec:
       clusterPermissions:
       - rules:
+        - apiGroups:
+          - customized-script-remediation.medik8s.io
+          resources:
+          - customizedscriptremediationconfigs
+          verbs:
+          - create
+          - delete
+          - get
+          - list
+          - patch
+          - update
+          - watch
+        - apiGroups:
+          - customized-script-remediation.medik8s.io
+          resources:
+          - customizedscriptremediationconfigs/finalizers
+          verbs:
+          - update
+        - apiGroups:
+          - customized-script-remediation.medik8s.io
+          resources:
+          - customizedscriptremediationconfigs/status
+          verbs:
+          - get
+          - patch
+          - update
         - apiGroups:
           - customized-script-remediation.medik8s.io
           resources:
