@@ -1,9 +1,16 @@
+# versions at https://github.com/slintes/sort-imports/tags
+SORT_IMPORTS_VERSION = v0.2.1
+
+OPERATOR_NAME ?= customized-script-remediation
+
 # VERSION defines the project version for the bundle.
 # Update this value when you upgrade the version of your project.
 # To re-generate a bundle for another specific version without changing the standard setup, you can:
 # - use the VERSION as arg of the bundle target (e.g make bundle VERSION=0.0.2)
 # - use environment variables to overwrite this value (e.g export VERSION=0.0.2)
-VERSION ?= 0.0.1
+DEFAULT_VERSION := 0.0.1
+VERSION ?= $(DEFAULT_VERSION)
+export VERSION
 
 # CHANNELS define the bundle channels used in the bundle.
 # Add a new line here if you would like to change its default config. (E.g CHANNELS = "candidate,fast,stable")
@@ -198,6 +205,22 @@ envtest: $(ENVTEST) ## Download envtest-setup locally if necessary.
 $(ENVTEST): $(LOCALBIN)
 	test -s $(LOCALBIN)/setup-envtest || GOBIN=$(LOCALBIN) go install sigs.k8s.io/controller-runtime/tools/setup-envtest@latest
 
+# go-install-tool will 'go install' any package $2 and install it to $1.
+define go-install-tool
+@[ -f $(1) ] || { \
+set -e ;\
+TMP_DIR=$$(mktemp -d) ;\
+cd $$TMP_DIR ;\
+go mod init tmp ;\
+BIN_DIR=$$(dirname $(1)) ;\
+mkdir -p $$BIN_DIR ;\
+echo "Downloading $(2)" ;\
+GOBIN=$$BIN_DIR GOFLAGS='' CGO_ENABLED=0 go install $(2) ;\
+rm -rf $$TMP_DIR ;\
+}
+endef
+
+export BUNDLE_CSV ?= "./bundle/manifests/$(OPERATOR_NAME).clusterserviceversion.yaml"
 .PHONY: bundle
 bundle: manifests kustomize ## Generate bundle manifests and metadata, then validate generated files.
 	operator-sdk generate kustomize manifests -q
@@ -253,3 +276,34 @@ catalog-build: opm ## Build a catalog image.
 .PHONY: catalog-push
 catalog-push: ## Push a catalog image.
 	$(MAKE) docker-push IMG=$(CATALOG_IMG)
+
+.PHONY: vendor
+vendor: ## Runs go mod vendor
+	go mod vendor
+
+.PHONY: tidy
+tidy: ## Runs go mod tidy
+	go mod tidy
+
+# Revert all version or build date related changes
+.PHONY: bundle-reset
+bundle-reset:
+	VERSION=0.0.1 $(MAKE) manifests bundle
+	# empty creation date
+	sed -r -i "s|createdAt: .*|createdAt: \"\"|;" ${BUNDLE_CSV}
+
+SORT_IMPORTS = $(shell pwd)/bin/sort-imports
+.PHONY: sort-imports
+sort-imports: ## Download sort-imports locally if necessary.
+	$(call go-install-tool,$(SORT_IMPORTS),github.com/slintes/sort-imports@$(SORT_IMPORTS_VERSION))
+
+.PHONY: test-imports
+test-imports: sort-imports ## Check for sorted imports
+	$(SORT_IMPORTS) .
+
+.PHONY: fix-imports
+fix-imports: sort-imports ## Sort imports
+	$(SORT_IMPORTS) -w .
+
+.PHONY: full-gen
+full-gen:  generate manifests vendor tidy bundle fix-imports bundle-reset ## generates all automatically generated content
