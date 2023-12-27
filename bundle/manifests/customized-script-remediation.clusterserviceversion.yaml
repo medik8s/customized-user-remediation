@@ -36,7 +36,7 @@ metadata:
         }
       ]
     capabilities: Basic Install
-    createdAt: "2023-12-26T15:08:08Z"
+    createdAt: ""
     operators.operatorframework.io/builder: operator-sdk-v1.26.0
     operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
   name: customized-script-remediation.v0.0.1
@@ -56,6 +56,10 @@ spec:
       displayName: Customized Script Remediation Template
       kind: CustomizedScriptRemediationTemplate
       name: customizedscriptremediationtemplates.customized-script-remediation.medik8s.io
+      specDescriptors:
+      - description: Template defines the desired state of CustomizedScriptRemediationTemplate
+        displayName: Template
+        path: template
       version: v1alpha1
   description: TBD
   displayName: Customized Script Remediation Operator
@@ -88,32 +92,6 @@ spec:
           - customized-script-remediation.medik8s.io
           resources:
           - customizedscriptremediations/status
-          verbs:
-          - get
-          - patch
-          - update
-        - apiGroups:
-          - customized-script-remediation.medik8s.io
-          resources:
-          - customizedscriptremediationtemplates
-          verbs:
-          - create
-          - delete
-          - get
-          - list
-          - patch
-          - update
-          - watch
-        - apiGroups:
-          - customized-script-remediation.medik8s.io
-          resources:
-          - customizedscriptremediationtemplates/finalizers
-          verbs:
-          - update
-        - apiGroups:
-          - customized-script-remediation.medik8s.io
-          resources:
-          - customizedscriptremediationtemplates/status
           verbs:
           - get
           - patch

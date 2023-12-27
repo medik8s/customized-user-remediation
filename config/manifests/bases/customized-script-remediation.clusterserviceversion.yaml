@@ -21,6 +21,10 @@ spec:
       displayName: Customized Script Remediation Template
       kind: CustomizedScriptRemediationTemplate
       name: customizedscriptremediationtemplates.customized-script-remediation.medik8s.io
+      specDescriptors:
+      - description: Template defines the desired state of CustomizedScriptRemediationTemplate
+        displayName: Template
+        path: template
       version: v1alpha1
   description: TBD
   displayName: Customized Script Remediation Operator

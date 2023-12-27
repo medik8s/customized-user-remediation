@@ -37,10 +37,23 @@ spec:
             description: CustomizedScriptRemediationTemplateSpec defines the desired
               state of CustomizedScriptRemediationTemplate
             properties:
-              foo:
-                description: Foo is an example field of CustomizedScriptRemediationTemplate.
-                  Edit customizedscriptremediationtemplate_types.go to remove/update
-                type: string
+              template:
+                description: Template defines the desired state of CustomizedScriptRemediationTemplate
+                properties:
+                  spec:
+                    description: CustomizedScriptRemediationSpec defines the desired
+                      state of CustomizedScriptRemediation
+                    properties:
+                      foo:
+                        description: Foo is an example field of CustomizedScriptRemediation.
+                          Edit customizedscriptremediation_types.go to remove/update
+                        type: string
+                    type: object
+                required:
+                - spec
+                type: object
+            required:
+            - template
             type: object
           status:
             description: CustomizedScriptRemediationTemplateStatus defines the observed

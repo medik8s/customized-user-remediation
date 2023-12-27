@@ -23,13 +23,15 @@ import (
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
+type CustomizedScriptRemediationTemplateResource struct {
+	Spec CustomizedScriptRemediationSpec `json:"spec"`
+}
+
 // CustomizedScriptRemediationTemplateSpec defines the desired state of CustomizedScriptRemediationTemplate
 type CustomizedScriptRemediationTemplateSpec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
-
-	// Foo is an example field of CustomizedScriptRemediationTemplate. Edit customizedscriptremediationtemplate_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	// Template defines the desired state of CustomizedScriptRemediationTemplate
+	//+operator-sdk:csv:customresourcedefinitions:type=spec
+	Template CustomizedScriptRemediationTemplateResource `json:"template"`
 }
 
 // CustomizedScriptRemediationTemplateStatus defines the observed state of CustomizedScriptRemediationTemplate
