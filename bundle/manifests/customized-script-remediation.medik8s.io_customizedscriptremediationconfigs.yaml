@@ -36,9 +36,9 @@ spec:
             description: CustomizedScriptRemediationConfigSpec defines the desired
               state of CustomizedScriptRemediationConfig
             properties:
-              foo:
-                description: Foo is an example field of CustomizedScriptRemediationConfig.
-                  Edit customizedscriptremediationconfig_types.go to remove/update
+              script:
+                description: Script is a user defined bash script to be run in case
+                  of remediation.
                 type: string
             type: object
           status:

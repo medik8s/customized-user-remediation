@@ -19,18 +19,23 @@ package controllers
 import (
 	"context"
 
+	"github.com/go-logr/logr"
+
+	"k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
-	"sigs.k8s.io/controller-runtime/pkg/log"
 
 	customizedscriptremediationv1alpha1 "github.com/mshitrit/customized-script-remediation/api/v1alpha1"
+	"github.com/mshitrit/customized-script-remediation/pkg/script"
 )
 
 // CustomizedScriptRemediationConfigReconciler reconciles a CustomizedScriptRemediationConfig object
 type CustomizedScriptRemediationConfigReconciler struct {
 	client.Client
+	Log    logr.Logger
 	Scheme *runtime.Scheme
+	script.Manager
 }
 
 //+kubebuilder:rbac:groups=customized-script-remediation.medik8s.io,resources=customizedscriptremediationconfigs,verbs=get;list;watch;create;update;patch;delete
@@ -47,9 +52,22 @@ type CustomizedScriptRemediationConfigReconciler struct {
 // For more details, check Reconcile and its Result here:
 // - https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.13.0/pkg/reconcile
 func (r *CustomizedScriptRemediationConfigReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
-	_ = log.FromContext(ctx)
+	logger := r.Log.WithValues("customizedscriptremediationconfig", req.NamespacedName)
 
-	// TODO(user): your logic here
+	config := &customizedscriptremediationv1alpha1.CustomizedScriptRemediationConfig{}
+	err := r.Client.Get(ctx, req.NamespacedName, config)
+
+	//In case config is deleted (or about to be deleted) do nothing in order not to interfere with OLM delete process
+	if err != nil && errors.IsNotFound(err) || err == nil && config.DeletionTimestamp != nil {
+		return ctrl.Result{}, nil
+	}
+
+	if err != nil {
+		logger.Error(err, "failed to fetch cr")
+		return ctrl.Result{}, err
+	}
+
+	r.Manager.SetScript(config.Spec.Script)
 
 	return ctrl.Result{}, nil
 }

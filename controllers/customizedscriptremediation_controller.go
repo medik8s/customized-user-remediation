@@ -19,18 +19,23 @@ package controllers
 import (
 	"context"
 
+	"github.com/go-logr/logr"
+
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/log"
 
 	customizedscriptremediationv1alpha1 "github.com/mshitrit/customized-script-remediation/api/v1alpha1"
+	"github.com/mshitrit/customized-script-remediation/pkg/script"
 )
 
 // CustomizedScriptRemediationReconciler reconciles a CustomizedScriptRemediation object
 type CustomizedScriptRemediationReconciler struct {
 	client.Client
+	Log    logr.Logger
 	Scheme *runtime.Scheme
+	script.Manager
 }
 
 //+kubebuilder:rbac:groups=customized-script-remediation.medik8s.io,resources=customizedscriptremediations,verbs=get;list;watch;create;update;patch;delete
@@ -49,7 +54,7 @@ type CustomizedScriptRemediationReconciler struct {
 func (r *CustomizedScriptRemediationReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	_ = log.FromContext(ctx)
 
-	// TODO(user): your logic here
+	// TODO mshitrit continue here
 
 	return ctrl.Result{}, nil
 }

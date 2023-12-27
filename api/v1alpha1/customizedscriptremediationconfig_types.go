@@ -25,11 +25,10 @@ import (
 
 // CustomizedScriptRemediationConfigSpec defines the desired state of CustomizedScriptRemediationConfig
 type CustomizedScriptRemediationConfigSpec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	// Foo is an example field of CustomizedScriptRemediationConfig. Edit customizedscriptremediationconfig_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	// Script is a user defined bash script to be run in case of remediation.
+	Script string `json:"script,omitempty"`
 }
 
 // CustomizedScriptRemediationConfigStatus defines the observed state of CustomizedScriptRemediationConfig

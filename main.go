@@ -34,6 +34,7 @@ import (
 	customizedscriptremediationv1alpha1 "github.com/mshitrit/customized-script-remediation/api/v1alpha1"
 	"github.com/mshitrit/customized-script-remediation/controllers"
 	//+kubebuilder:scaffold:imports
+	"github.com/mshitrit/customized-script-remediation/pkg/script"
 )
 
 var (
@@ -89,16 +90,21 @@ func main() {
 		os.Exit(1)
 	}
 
+	scriptManager := script.NewManager()
 	if err = (&controllers.CustomizedScriptRemediationReconciler{
-		Client: mgr.GetClient(),
-		Scheme: mgr.GetScheme(),
+		Client:  mgr.GetClient(),
+		Log:     ctrl.Log.WithName("controllers").WithName("CustomizedScriptRemediation"),
+		Scheme:  mgr.GetScheme(),
+		Manager: scriptManager,
 	}).SetupWithManager(mgr); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "CustomizedScriptRemediation")
 		os.Exit(1)
 	}
 	if err = (&controllers.CustomizedScriptRemediationConfigReconciler{
-		Client: mgr.GetClient(),
-		Scheme: mgr.GetScheme(),
+		Client:  mgr.GetClient(),
+		Log:     ctrl.Log.WithName("controllers").WithName("CustomizedScriptRemediationConfig"),
+		Scheme:  mgr.GetScheme(),
+		Manager: scriptManager,
 	}).SetupWithManager(mgr); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "CustomizedScriptRemediationConfig")
 		os.Exit(1)
