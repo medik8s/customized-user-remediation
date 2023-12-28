@@ -56,7 +56,6 @@ type CustomizedScriptRemediationReconciler struct {
 func (r *CustomizedScriptRemediationReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	_ = log.FromContext(ctx)
 
-	// TODO mshitrit continue here
 	csr := &customizedscriptremediationv1alpha1.CustomizedScriptRemediation{}
 	if err := r.Get(ctx, req.NamespacedName, csr); err != nil {
 		if apiErrors.IsNotFound(err) {
