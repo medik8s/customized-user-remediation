@@ -6,8 +6,8 @@ metadata:
     app.kubernetes.io/name: role
     app.kubernetes.io/instance: leader-election-role
     app.kubernetes.io/component: rbac
-    app.kubernetes.io/created-by: customized-script-remediation
-    app.kubernetes.io/part-of: customized-script-remediation
+    app.kubernetes.io/created-by: customized-user-remediation
+    app.kubernetes.io/part-of: customized-user-remediation
     app.kubernetes.io/managed-by: kustomize
   name: leader-election-role
 rules:

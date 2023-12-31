@@ -1,4 +1,4 @@
-module github.com/mshitrit/customized-script-remediation
+module github.com/mshitrit/customized-user-remediation
 
 go 1.19
 

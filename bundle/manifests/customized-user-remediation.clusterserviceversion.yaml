@@ -2,85 +2,25 @@ apiVersion: operators.coreos.com/v1alpha1
 kind: ClusterServiceVersion
 metadata:
   annotations:
-    alm-examples: |-
-      [
-        {
-          "apiVersion": "customized-script-remediation.medik8s.io/v1alpha1",
-          "kind": "CustomizedScriptRemediation",
-          "metadata": {
-            "labels": {
-              "app.kubernetes.io/created-by": "customized-script-remediation",
-              "app.kubernetes.io/instance": "customizedscriptremediation-sample",
-              "app.kubernetes.io/managed-by": "kustomize",
-              "app.kubernetes.io/name": "customizedscriptremediation",
-              "app.kubernetes.io/part-of": "customized-script-remediation"
-            },
-            "name": "customizedscriptremediation-sample"
-          },
-          "spec": null
-        },
-        {
-          "apiVersion": "customized-script-remediation.medik8s.io/v1alpha1",
-          "kind": "CustomizedScriptRemediationConfig",
-          "metadata": {
-            "labels": {
-              "app.kubernetes.io/created-by": "customized-script-remediation",
-              "app.kubernetes.io/instance": "customizedscriptremediationconfig-sample",
-              "app.kubernetes.io/managed-by": "kustomize",
-              "app.kubernetes.io/name": "customizedscriptremediationconfig",
-              "app.kubernetes.io/part-of": "customized-script-remediation"
-            },
-            "name": "customizedscriptremediationconfig-sample"
-          },
-          "spec": null
-        },
-        {
-          "apiVersion": "customized-script-remediation.medik8s.io/v1alpha1",
-          "kind": "CustomizedScriptRemediationTemplate",
-          "metadata": {
-            "labels": {
-              "app.kubernetes.io/created-by": "customized-script-remediation",
-              "app.kubernetes.io/instance": "customizedscriptremediationtemplate-sample",
-              "app.kubernetes.io/managed-by": "kustomize",
-              "app.kubernetes.io/name": "customizedscriptremediationtemplate",
-              "app.kubernetes.io/part-of": "customized-script-remediation"
-            },
-            "name": "customizedscriptremediationtemplate-sample"
-          },
-          "spec": null
-        }
-      ]
+    alm-examples: '[]'
     capabilities: Basic Install
     createdAt: ""
     operators.operatorframework.io/builder: operator-sdk-v1.32.0
     operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
-  name: customized-script-remediation.v0.0.1
+  name: customized-user-remediation.v0.0.1
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
   customresourcedefinitions:
     owned:
-    - description: CustomizedScriptRemediationConfig is the Schema for the customizedscriptremediationconfigs
-        API
-      displayName: Customized Script Remediation Config
-      kind: CustomizedScriptRemediationConfig
-      name: customizedscriptremediationconfigs.customized-script-remediation.medik8s.io
+    - kind: CustomizedUserRemediationConfig
+      name: customizeduserremediationconfigs.customized-user-remediation.medik8s.io
       version: v1alpha1
-    - description: CustomizedScriptRemediation is the Schema for the customizedscriptremediations
-        API
-      displayName: Customized Script Remediation
-      kind: CustomizedScriptRemediation
-      name: customizedscriptremediations.customized-script-remediation.medik8s.io
+    - kind: CustomizedUserRemediation
+      name: customizeduserremediations.customized-user-remediation.medik8s.io
       version: v1alpha1
-    - description: CustomizedScriptRemediationTemplate is the Schema for the customizedscriptremediationtemplates
-        API
-      displayName: Customized Script Remediation Template
-      kind: CustomizedScriptRemediationTemplate
-      name: customizedscriptremediationtemplates.customized-script-remediation.medik8s.io
-      specDescriptors:
-      - description: Template defines the desired state of CustomizedScriptRemediationTemplate
-        displayName: Template
-        path: template
+    - kind: CustomizedUserRemediationTemplate
+      name: customizeduserremediationtemplates.customized-user-remediation.medik8s.io
       version: v1alpha1
   description: TBD
   displayName: Customized Script Remediation Operator
@@ -89,9 +29,9 @@ spec:
       clusterPermissions:
       - rules:
         - apiGroups:
-          - customized-script-remediation.medik8s.io
+          - customized-user-remediation.medik8s.io
           resources:
-          - customizedscriptremediationconfigs
+          - customizeduserremediationconfigs
           verbs:
           - create
           - delete
@@ -101,23 +41,23 @@ spec:
           - update
           - watch
         - apiGroups:
-          - customized-script-remediation.medik8s.io
+          - customized-user-remediation.medik8s.io
           resources:
-          - customizedscriptremediationconfigs/finalizers
+          - customizeduserremediationconfigs/finalizers
           verbs:
           - update
         - apiGroups:
-          - customized-script-remediation.medik8s.io
+          - customized-user-remediation.medik8s.io
           resources:
-          - customizedscriptremediationconfigs/status
+          - customizeduserremediationconfigs/status
           verbs:
           - get
           - patch
           - update
         - apiGroups:
-          - customized-script-remediation.medik8s.io
+          - customized-user-remediation.medik8s.io
           resources:
-          - customizedscriptremediations
+          - customizeduserremediations
           verbs:
           - create
           - delete
@@ -127,15 +67,15 @@ spec:
           - update
           - watch
         - apiGroups:
-          - customized-script-remediation.medik8s.io
+          - customized-user-remediation.medik8s.io
           resources:
-          - customizedscriptremediations/finalizers
+          - customizeduserremediations/finalizers
           verbs:
           - update
         - apiGroups:
-          - customized-script-remediation.medik8s.io
+          - customized-user-remediation.medik8s.io
           resources:
-          - customizedscriptremediations/status
+          - customizeduserremediations/status
           verbs:
           - get
           - patch
@@ -152,17 +92,17 @@ spec:
           - subjectaccessreviews
           verbs:
           - create
-        serviceAccountName: customized-script-remediation-controller-manager
+        serviceAccountName: customized-user-remediation-controller-manager
       deployments:
       - label:
           app.kubernetes.io/component: manager
-          app.kubernetes.io/created-by: customized-script-remediation
+          app.kubernetes.io/created-by: customized-user-remediation
           app.kubernetes.io/instance: controller-manager
           app.kubernetes.io/managed-by: kustomize
           app.kubernetes.io/name: deployment
-          app.kubernetes.io/part-of: customized-script-remediation
+          app.kubernetes.io/part-of: customized-user-remediation
           control-plane: controller-manager
-        name: customized-script-remediation-controller-manager
+        name: customized-user-remediation-controller-manager
         spec:
           replicas: 1
           selector:
@@ -222,7 +162,7 @@ spec:
                 - --leader-elect
                 command:
                 - /manager
-                image: quay.io/mshitrit/customized-script-remediation-operator:latest
+                image: quay.io/mshitrit/customized-user-remediation-operator:latest
                 livenessProbe:
                   httpGet:
                     path: /healthz
@@ -250,7 +190,7 @@ spec:
                     - ALL
               securityContext:
                 runAsNonRoot: true
-              serviceAccountName: customized-script-remediation-controller-manager
+              serviceAccountName: customized-user-remediation-controller-manager
               terminationGracePeriodSeconds: 10
       permissions:
       - rules:
@@ -285,7 +225,7 @@ spec:
           verbs:
           - create
           - patch
-        serviceAccountName: customized-script-remediation-controller-manager
+        serviceAccountName: customized-user-remediation-controller-manager
     strategy: deployment
   installModes:
   - supported: false
@@ -306,7 +246,7 @@ spec:
   - CSR
   links:
   - name: Customized Script Remediation
-    url: https://customized-script-remediation.domain
+    url: https://customized-user-remediation.domain
   maintainers:
   - email: medik8s@googlegroups.com
     name: Medik8s Team

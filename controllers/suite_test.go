@@ -30,7 +30,7 @@ import (
 	logf "sigs.k8s.io/controller-runtime/pkg/log"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	customizeduserremediationv1alpha1 "github.com/mshitrit/customized-script-remediation/api/v1alpha1"
+	customizeduserremediationv1alpha1 "github.com/mshitrit/customized-user-remediation/api/v1alpha1"
 	//+kubebuilder:scaffold:imports
 )
 

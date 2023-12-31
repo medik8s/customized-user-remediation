@@ -6,13 +6,13 @@ metadata:
     app.kubernetes.io/name: clusterrole
     app.kubernetes.io/instance: customizedscriptremediation-viewer-role
     app.kubernetes.io/component: rbac
-    app.kubernetes.io/created-by: customized-script-remediation
-    app.kubernetes.io/part-of: customized-script-remediation
+    app.kubernetes.io/created-by: customized-user-remediation
+    app.kubernetes.io/part-of: customized-user-remediation
     app.kubernetes.io/managed-by: kustomize
   name: customizedscriptremediation-viewer-role
 rules:
 - apiGroups:
-  - customized-script-remediation.medik8s.io
+  - customized-user-remediation.medik8s.io
   resources:
   - customizedscriptremediations
   verbs:
@@ -20,7 +20,7 @@ rules:
   - list
   - watch
 - apiGroups:
-  - customized-script-remediation.medik8s.io
+  - customized-user-remediation.medik8s.io
   resources:
   - customizedscriptremediations/status
   verbs:

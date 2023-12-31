@@ -28,8 +28,8 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log"
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 
-	customizeduserremediationv1alpha1 "github.com/mshitrit/customized-script-remediation/api/v1alpha1"
-	"github.com/mshitrit/customized-script-remediation/pkg/script"
+	customizeduserremediationv1alpha1 "github.com/mshitrit/customized-user-remediation/api/v1alpha1"
+	"github.com/mshitrit/customized-user-remediation/pkg/script"
 )
 
 // CustomizedUserRemediationReconciler reconciles a CustomizedUserRemediation object
@@ -40,9 +40,9 @@ type CustomizedUserRemediationReconciler struct {
 	script.Manager
 }
 
-//+kubebuilder:rbac:groups=customized-script-remediation.medik8s.io,resources=customizeduserremediations,verbs=get;list;watch;create;update;patch;delete
-//+kubebuilder:rbac:groups=customized-script-remediation.medik8s.io,resources=customizeduserremediations/status,verbs=get;update;patch
-//+kubebuilder:rbac:groups=customized-script-remediation.medik8s.io,resources=customizeduserremediations/finalizers,verbs=update
+//+kubebuilder:rbac:groups=customized-user-remediation.medik8s.io,resources=customizeduserremediations,verbs=get;list;watch;create;update;patch;delete
+//+kubebuilder:rbac:groups=customized-user-remediation.medik8s.io,resources=customizeduserremediations/status,verbs=get;update;patch
+//+kubebuilder:rbac:groups=customized-user-remediation.medik8s.io,resources=customizeduserremediations/finalizers,verbs=update
 
 // Reconcile is part of the main kubernetes reconciliation loop which aims to
 // move the current state of the cluster closer to the desired state.

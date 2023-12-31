@@ -11,7 +11,7 @@ KUSTOMIZE_VERSION = v5.2.1
 # versions at https://github.com/slintes/sort-imports/tags
 SORT_IMPORTS_VERSION = v0.2.1
 
-OPERATOR_NAME ?= customized-script-remediation
+OPERATOR_NAME ?= customized-user-remediation
 
 # VERSION defines the project version for the bundle.
 # Update this value when you upgrade the version of your project.
@@ -49,7 +49,7 @@ export IMAGE_REGISTRY
 # This variable is used to construct full image tags for bundle and catalog images.
 #
 # For example, running 'make bundle-build bundle-push catalog-build catalog-push' will build and push both
-# medik8s/customized-script-remediation-bundle:$(IMAGE_TAG) and medik8s/customized-script-remediation-catalog:$(IMAGE_TAG).
+# medik8s/customized-user-remediation-bundle:$(IMAGE_TAG) and medik8s/customized-user-remediation-catalog:$(IMAGE_TAG).
 IMAGE_TAG_BASE ?= $(IMAGE_REGISTRY)/$(OPERATOR_NAME)
 
 # The image tag given to the resulting catalog image (e.g. make catalog-build CATALOG_IMG=example.com/operator-catalog:v0.2.0).
@@ -223,10 +223,17 @@ ifeq (,$(wildcard $(KUSTOMIZE)))
 	}
 endif
 
+CONTROLLER_GEN_BIN_FOLDER = $(shell pwd)/bin/controller-gen
+CONTROLLER_GEN = $(CONTROLLER_GEN_BIN_FOLDER)/$(CONTROLLER_GEN_VERSION)/controller-gen
 .PHONY: controller-gen
-controller-gen: $(CONTROLLER_GEN) ## Download controller-gen locally if necessary.
-$(CONTROLLER_GEN): $(LOCALBIN)
-	test -s $(LOCALBIN)/controller-gen || GOBIN=$(LOCALBIN) go install sigs.k8s.io/controller-tools/cmd/controller-gen@$(CONTROLLER_TOOLS_VERSION)
+controller-gen: ## Download controller-gen locally if necessary.
+ifeq (,$(wildcard $(CONTROLLER_GEN)))
+	@{ \
+	rm -rf $(CONTROLLER_GEN_BIN_FOLDER) ;\
+	mkdir -p $(dir $(CONTROLLER_GEN)) ;\
+	$(call go-install-tool,$(CONTROLLER_GEN),sigs.k8s.io/controller-tools/cmd/controller-gen@${CONTROLLER_GEN_VERSION}) ;\
+	}
+endif
 
 .PHONY: envtest
 envtest: $(ENVTEST) ## Download envtest-setup locally if necessary.

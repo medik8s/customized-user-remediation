@@ -4,7 +4,7 @@ metadata:
   annotations:
     alm-examples: '[]'
     capabilities: Basic Install
-  name: customized-script-remediation.v0.0.0
+  name: customized-user-remediation.v0.0.0
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -14,19 +14,19 @@ spec:
         API
       displayName: Customized Script Remediation Config
       kind: CustomizedScriptRemediationConfig
-      name: customizedscriptremediationconfigs.customized-script-remediation.medik8s.io
+      name: customizedscriptremediationconfigs.customized-user-remediation.medik8s.io
       version: v1alpha1
     - description: CustomizedScriptRemediation is the Schema for the customizedscriptremediations
         API
       displayName: Customized Script Remediation
       kind: CustomizedScriptRemediation
-      name: customizedscriptremediations.customized-script-remediation.medik8s.io
+      name: customizedscriptremediations.customized-user-remediation.medik8s.io
       version: v1alpha1
     - description: CustomizedScriptRemediationTemplate is the Schema for the customizedscriptremediationtemplates
         API
       displayName: Customized Script Remediation Template
       kind: CustomizedScriptRemediationTemplate
-      name: customizedscriptremediationtemplates.customized-script-remediation.medik8s.io
+      name: customizedscriptremediationtemplates.customized-user-remediation.medik8s.io
       specDescriptors:
       - description: Template defines the desired state of CustomizedScriptRemediationTemplate
         displayName: Template
@@ -57,7 +57,7 @@ spec:
   - CSR
   links:
   - name: Customized Script Remediation
-    url: https://customized-script-remediation.domain
+    url: https://customized-user-remediation.domain
   maintainers:
   - email: medik8s@googlegroups.com
     name: Medik8s Team

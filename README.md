@@ -1,1 +1,1 @@
-# customized-script-remediation
+# customized-user-remediation
