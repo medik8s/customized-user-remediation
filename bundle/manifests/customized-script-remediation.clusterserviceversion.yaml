@@ -52,7 +52,7 @@ metadata:
       ]
     capabilities: Basic Install
     createdAt: ""
-    operators.operatorframework.io/builder: operator-sdk-v1.26.0
+    operators.operatorframework.io/builder: operator-sdk-v1.32.0
     operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
   name: customized-script-remediation.v0.0.1
   namespace: placeholder
@@ -84,9 +84,6 @@ spec:
       version: v1alpha1
   description: TBD
   displayName: Customized Script Remediation Operator
-  icon:
-  - base64data: ""
-    mediatype: ""
   install:
     spec:
       clusterPermissions:
@@ -314,6 +311,7 @@ spec:
   - email: medik8s@googlegroups.com
     name: Medik8s Team
   maturity: alpha
+  minKubeVersion: 1.25.0
   provider:
     name: Medik8s
     url: https://www.medik8s.io/

@@ -34,9 +34,6 @@ spec:
       version: v1alpha1
   description: TBD
   displayName: Customized Script Remediation Operator
-  icon:
-  - base64data: ""
-    mediatype: ""
   install:
     spec:
       deployments: null
@@ -65,6 +62,7 @@ spec:
   - email: medik8s@googlegroups.com
     name: Medik8s Team
   maturity: alpha
+  minKubeVersion: 1.25.0
   provider:
     name: Medik8s
     url: https://www.medik8s.io/
