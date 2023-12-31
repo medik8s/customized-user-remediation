@@ -254,8 +254,6 @@ bundle: manifests operator-sdk kustomize ## Generate bundle manifests and metada
 	$(OPERATOR_SDK) generate kustomize manifests -q
 	cd config/manager && $(KUSTOMIZE) edit set image controller=$(IMG)
 	$(KUSTOMIZE) build config/manifests | envsubst | $(OPERATOR_SDK) generate bundle -q --overwrite --version $(VERSION) $(BUNDLE_METADATA_OPTS)
-	# service name is replaced because it is too long (over 63 characters)
-	sed -i 's/name: customized-script-remediation-controller-manager-metrics-service/name: csr-controller-manager-metrics-service/' "./bundle/manifests/${OPERATOR_NAME}-controller-manager-metrics-service_v1_service.yaml"
 	$(MAKE) bundle-validate
 
 .PHONY: bundle-validate
