@@ -35,11 +35,6 @@ spec:
           spec:
             description: CustomizedUserRemediationSpec defines the desired state of
               CustomizedUserRemediation
-            properties:
-              foo:
-                description: Foo is an example field of CustomizedUserRemediation.
-                  Edit customizeduserremediation_types.go to remove/update
-                type: string
             type: object
           status:
             description: CustomizedUserRemediationStatus defines the observed state
