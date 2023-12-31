@@ -31,7 +31,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/healthz"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	customizedscriptremediationv1alpha1 "github.com/mshitrit/customized-script-remediation/api/v1alpha1"
+	customizeduserremediationv1alpha1 "github.com/mshitrit/customized-script-remediation/api/v1alpha1"
 	"github.com/mshitrit/customized-script-remediation/controllers"
 
 	//+kubebuilder:scaffold:imports
@@ -46,7 +46,7 @@ var (
 func init() {
 	utilruntime.Must(clientgoscheme.AddToScheme(scheme))
 
-	utilruntime.Must(customizedscriptremediationv1alpha1.AddToScheme(scheme))
+	utilruntime.Must(customizeduserremediationv1alpha1.AddToScheme(scheme))
 	//+kubebuilder:scaffold:scheme
 }
 
@@ -92,22 +92,22 @@ func main() {
 	}
 
 	scriptManager := script.NewManager(mgr.GetClient())
-	if err = (&controllers.CustomizedScriptRemediationReconciler{
+	if err = (&controllers.CustomizedUserRemediationReconciler{
 		Client:  mgr.GetClient(),
-		Log:     ctrl.Log.WithName("controllers").WithName("CustomizedScriptRemediation"),
+		Log:     ctrl.Log.WithName("controllers").WithName("CustomizedUserRemediation"),
 		Scheme:  mgr.GetScheme(),
 		Manager: scriptManager,
 	}).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", "CustomizedScriptRemediation")
+		setupLog.Error(err, "unable to create controller", "controller", "CustomizedUserRemediation")
 		os.Exit(1)
 	}
-	if err = (&controllers.CustomizedScriptRemediationConfigReconciler{
+	if err = (&controllers.CustomizedUserRemediationConfigReconciler{
 		Client:  mgr.GetClient(),
-		Log:     ctrl.Log.WithName("controllers").WithName("CustomizedScriptRemediationConfig"),
+		Log:     ctrl.Log.WithName("controllers").WithName("CustomizedUserRemediationConfig"),
 		Scheme:  mgr.GetScheme(),
 		Manager: scriptManager,
 	}).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", "CustomizedScriptRemediationConfig")
+		setupLog.Error(err, "unable to create controller", "controller", "CustomizedUserRemediationConfig")
 		os.Exit(1)
 	}
 	//+kubebuilder:scaffold:builder

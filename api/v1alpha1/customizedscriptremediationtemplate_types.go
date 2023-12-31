@@ -23,19 +23,19 @@ import (
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
-type CustomizedScriptRemediationTemplateResource struct {
-	Spec CustomizedScriptRemediationSpec `json:"spec"`
+type CustomizedUserRemediationTemplateResource struct {
+	Spec CustomizedUserRemediationSpec `json:"spec"`
 }
 
-// CustomizedScriptRemediationTemplateSpec defines the desired state of CustomizedScriptRemediationTemplate
-type CustomizedScriptRemediationTemplateSpec struct {
-	// Template defines the desired state of CustomizedScriptRemediationTemplate
+// CustomizedUserRemediationTemplateSpec defines the desired state of CustomizedUserRemediationTemplate
+type CustomizedUserRemediationTemplateSpec struct {
+	// Template defines the desired state of CustomizedUserRemediationTemplate
 	//+operator-sdk:csv:customresourcedefinitions:type=spec
-	Template CustomizedScriptRemediationTemplateResource `json:"template"`
+	Template CustomizedUserRemediationTemplateResource `json:"template"`
 }
 
-// CustomizedScriptRemediationTemplateStatus defines the observed state of CustomizedScriptRemediationTemplate
-type CustomizedScriptRemediationTemplateStatus struct {
+// CustomizedUserRemediationTemplateStatus defines the observed state of CustomizedUserRemediationTemplate
+type CustomizedUserRemediationTemplateStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 }
@@ -43,24 +43,24 @@ type CustomizedScriptRemediationTemplateStatus struct {
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
 
-// CustomizedScriptRemediationTemplate is the Schema for the customizedscriptremediationtemplates API
-type CustomizedScriptRemediationTemplate struct {
+// CustomizedUserRemediationTemplate is the Schema for the customizeduserremediationtemplates API
+type CustomizedUserRemediationTemplate struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   CustomizedScriptRemediationTemplateSpec   `json:"spec,omitempty"`
-	Status CustomizedScriptRemediationTemplateStatus `json:"status,omitempty"`
+	Spec   CustomizedUserRemediationTemplateSpec   `json:"spec,omitempty"`
+	Status CustomizedUserRemediationTemplateStatus `json:"status,omitempty"`
 }
 
 //+kubebuilder:object:root=true
 
-// CustomizedScriptRemediationTemplateList contains a list of CustomizedScriptRemediationTemplate
-type CustomizedScriptRemediationTemplateList struct {
+// CustomizedUserRemediationTemplateList contains a list of CustomizedUserRemediationTemplate
+type CustomizedUserRemediationTemplateList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []CustomizedScriptRemediationTemplate `json:"items"`
+	Items           []CustomizedUserRemediationTemplate `json:"items"`
 }
 
 func init() {
-	SchemeBuilder.Register(&CustomizedScriptRemediationTemplate{}, &CustomizedScriptRemediationTemplateList{})
+	SchemeBuilder.Register(&CustomizedUserRemediationTemplate{}, &CustomizedUserRemediationTemplateList{})
 }

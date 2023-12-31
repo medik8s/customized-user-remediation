@@ -23,16 +23,16 @@ import (
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
-// CustomizedScriptRemediationConfigSpec defines the desired state of CustomizedScriptRemediationConfig
-type CustomizedScriptRemediationConfigSpec struct {
+// CustomizedUserRemediationConfigSpec defines the desired state of CustomizedUserRemediationConfig
+type CustomizedUserRemediationConfigSpec struct {
 	// Important: Run "make" to regenerate code after modifying this file
 
 	// Script is a user defined bash script to be run in case of remediation.
 	Script string `json:"script,omitempty"`
 }
 
-// CustomizedScriptRemediationConfigStatus defines the observed state of CustomizedScriptRemediationConfig
-type CustomizedScriptRemediationConfigStatus struct {
+// CustomizedUserRemediationConfigStatus defines the observed state of CustomizedUserRemediationConfig
+type CustomizedUserRemediationConfigStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 }
@@ -40,24 +40,24 @@ type CustomizedScriptRemediationConfigStatus struct {
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
 
-// CustomizedScriptRemediationConfig is the Schema for the customizedscriptremediationconfigs API
-type CustomizedScriptRemediationConfig struct {
+// CustomizedUserRemediationConfig is the Schema for the customizeduserremediationconfigs API
+type CustomizedUserRemediationConfig struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   CustomizedScriptRemediationConfigSpec   `json:"spec,omitempty"`
-	Status CustomizedScriptRemediationConfigStatus `json:"status,omitempty"`
+	Spec   CustomizedUserRemediationConfigSpec   `json:"spec,omitempty"`
+	Status CustomizedUserRemediationConfigStatus `json:"status,omitempty"`
 }
 
 //+kubebuilder:object:root=true
 
-// CustomizedScriptRemediationConfigList contains a list of CustomizedScriptRemediationConfig
-type CustomizedScriptRemediationConfigList struct {
+// CustomizedUserRemediationConfigList contains a list of CustomizedUserRemediationConfig
+type CustomizedUserRemediationConfigList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []CustomizedScriptRemediationConfig `json:"items"`
+	Items           []CustomizedUserRemediationConfig `json:"items"`
 }
 
 func init() {
-	SchemeBuilder.Register(&CustomizedScriptRemediationConfig{}, &CustomizedScriptRemediationConfigList{})
+	SchemeBuilder.Register(&CustomizedUserRemediationConfig{}, &CustomizedUserRemediationConfigList{})
 }

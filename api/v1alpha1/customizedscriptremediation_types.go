@@ -23,17 +23,17 @@ import (
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
-// CustomizedScriptRemediationSpec defines the desired state of CustomizedScriptRemediation
-type CustomizedScriptRemediationSpec struct {
+// CustomizedUserRemediationSpec defines the desired state of CustomizedUserRemediation
+type CustomizedUserRemediationSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	// Foo is an example field of CustomizedScriptRemediation. Edit customizedscriptremediation_types.go to remove/update
+	// Foo is an example field of CustomizedUserRemediation. Edit customizeduserremediation_types.go to remove/update
 	Foo string `json:"foo,omitempty"`
 }
 
-// CustomizedScriptRemediationStatus defines the observed state of CustomizedScriptRemediation
-type CustomizedScriptRemediationStatus struct {
+// CustomizedUserRemediationStatus defines the observed state of CustomizedUserRemediation
+type CustomizedUserRemediationStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 }
@@ -41,24 +41,24 @@ type CustomizedScriptRemediationStatus struct {
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
 
-// CustomizedScriptRemediation is the Schema for the customizedscriptremediations API
-type CustomizedScriptRemediation struct {
+// CustomizedUserRemediation is the Schema for the customizeduserremediations API
+type CustomizedUserRemediation struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   CustomizedScriptRemediationSpec   `json:"spec,omitempty"`
-	Status CustomizedScriptRemediationStatus `json:"status,omitempty"`
+	Spec   CustomizedUserRemediationSpec   `json:"spec,omitempty"`
+	Status CustomizedUserRemediationStatus `json:"status,omitempty"`
 }
 
 //+kubebuilder:object:root=true
 
-// CustomizedScriptRemediationList contains a list of CustomizedScriptRemediation
-type CustomizedScriptRemediationList struct {
+// CustomizedUserRemediationList contains a list of CustomizedUserRemediation
+type CustomizedUserRemediationList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []CustomizedScriptRemediation `json:"items"`
+	Items           []CustomizedUserRemediation `json:"items"`
 }
 
 func init() {
-	SchemeBuilder.Register(&CustomizedScriptRemediation{}, &CustomizedScriptRemediationList{})
+	SchemeBuilder.Register(&CustomizedUserRemediation{}, &CustomizedUserRemediationList{})
 }

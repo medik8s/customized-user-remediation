@@ -28,35 +28,35 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log"
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 
-	customizedscriptremediationv1alpha1 "github.com/mshitrit/customized-script-remediation/api/v1alpha1"
+	customizeduserremediationv1alpha1 "github.com/mshitrit/customized-script-remediation/api/v1alpha1"
 	"github.com/mshitrit/customized-script-remediation/pkg/script"
 )
 
-// CustomizedScriptRemediationReconciler reconciles a CustomizedScriptRemediation object
-type CustomizedScriptRemediationReconciler struct {
+// CustomizedUserRemediationReconciler reconciles a CustomizedUserRemediation object
+type CustomizedUserRemediationReconciler struct {
 	client.Client
 	Log    logr.Logger
 	Scheme *runtime.Scheme
 	script.Manager
 }
 
-//+kubebuilder:rbac:groups=customized-script-remediation.medik8s.io,resources=customizedscriptremediations,verbs=get;list;watch;create;update;patch;delete
-//+kubebuilder:rbac:groups=customized-script-remediation.medik8s.io,resources=customizedscriptremediations/status,verbs=get;update;patch
-//+kubebuilder:rbac:groups=customized-script-remediation.medik8s.io,resources=customizedscriptremediations/finalizers,verbs=update
+//+kubebuilder:rbac:groups=customized-script-remediation.medik8s.io,resources=customizeduserremediations,verbs=get;list;watch;create;update;patch;delete
+//+kubebuilder:rbac:groups=customized-script-remediation.medik8s.io,resources=customizeduserremediations/status,verbs=get;update;patch
+//+kubebuilder:rbac:groups=customized-script-remediation.medik8s.io,resources=customizeduserremediations/finalizers,verbs=update
 
 // Reconcile is part of the main kubernetes reconciliation loop which aims to
 // move the current state of the cluster closer to the desired state.
 // TODO(user): Modify the Reconcile function to compare the state specified by
-// the CustomizedScriptRemediation object against the actual cluster state, and then
+// the CustomizedUserRemediation object against the actual cluster state, and then
 // perform operations to make the cluster state reflect the state specified by
 // the user.
 //
 // For more details, check Reconcile and its Result here:
 // - https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.13.0/pkg/reconcile
-func (r *CustomizedScriptRemediationReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
+func (r *CustomizedUserRemediationReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	_ = log.FromContext(ctx)
 
-	csr := &customizedscriptremediationv1alpha1.CustomizedScriptRemediation{}
+	csr := &customizeduserremediationv1alpha1.CustomizedUserRemediation{}
 	if err := r.Get(ctx, req.NamespacedName, csr); err != nil {
 		if apiErrors.IsNotFound(err) {
 			// SNR is deleted, stop reconciling
@@ -77,8 +77,8 @@ func (r *CustomizedScriptRemediationReconciler) Reconcile(ctx context.Context, r
 }
 
 // SetupWithManager sets up the controller with the Manager.
-func (r *CustomizedScriptRemediationReconciler) SetupWithManager(mgr ctrl.Manager) error {
+func (r *CustomizedUserRemediationReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(mgr).
-		For(&customizedscriptremediationv1alpha1.CustomizedScriptRemediation{}).
+		For(&customizeduserremediationv1alpha1.CustomizedUserRemediation{}).
 		Complete(r)
 }
