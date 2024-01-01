@@ -54,7 +54,7 @@ spec:
   - high-availability
   - baremetal
   - script
-  - CSR
+  - CUR
   links:
   - name: Customized Script Remediation
     url: https://customized-user-remediation.domain

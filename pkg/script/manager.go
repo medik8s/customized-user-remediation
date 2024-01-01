@@ -4,9 +4,12 @@ import (
 	"context"
 	"sync"
 
+	"github.com/go-logr/logr"
+
 	batchv1 "k8s.io/api/batch/v1"
 	v1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 )
 
@@ -17,13 +20,17 @@ type Manager interface {
 }
 
 func NewManager(client client.Client) Manager {
-	return &manager{Client: client}
+	return &manager{
+		Client: client,
+		Log:    ctrl.Log.WithName("script").WithName("manager"),
+	}
 }
 
 type manager struct {
 	script string
 	sync.RWMutex
 	Client client.Client
+	Log    logr.Logger
 }
 
 func (m *manager) RunScriptAsJob(nodeName string) error {
@@ -58,19 +65,20 @@ func (m *manager) RunScriptAsJob(nodeName string) error {
 			BackoffLimit: new(int32), // Set to 1 for retries
 		},
 	}
-
+	m.Log.Info("Remediation script about to be executed")
 	// Create the Job
-	err := m.Client.Create(context.Background(), job)
-	if err != nil {
+	if err := m.Client.Create(context.Background(), job); err != nil {
+		m.Log.Error(err, "Remediation script failed to execute")
 		return err
 	}
-
+	m.Log.Info("Remediation script executed successfully")
 	return nil
 }
 
 func (m *manager) SetScript(newScript string) {
 	m.Lock()
 	defer m.Unlock()
+	m.Log.Info("Remediation script updated", "previous script", m.script, "new script", newScript)
 	m.script = newScript
 }
 
