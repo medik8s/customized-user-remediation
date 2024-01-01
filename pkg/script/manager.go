@@ -49,7 +49,9 @@ func (m *manager) RunScriptAsJob(nodeName string) error {
 					Namespace:    ns,
 				},
 				Spec: v1.PodSpec{
-					NodeName: nodeName,
+					//TODO mshitrit consider whether v1.RestartPolicyOnFailure is a better choice
+					RestartPolicy: v1.RestartPolicyNever,
+					NodeName:      nodeName,
 					Containers: []v1.Container{
 						{
 							Name: "script-container",
