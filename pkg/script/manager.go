@@ -34,17 +34,19 @@ type manager struct {
 }
 
 func (m *manager) RunScriptAsJob(nodeName string) error {
-	// Get a Kubernetes client
-
+	//TODO mshitrit fetch the ns
+	ns := "openshift-workload-availability"
 	// Create a Job object with the provided script
 	job := &batchv1.Job{
 		ObjectMeta: metav1.ObjectMeta{
 			GenerateName: "script-job-",
+			Namespace:    ns,
 		},
 		Spec: batchv1.JobSpec{
 			Template: v1.PodTemplateSpec{
 				ObjectMeta: metav1.ObjectMeta{
 					GenerateName: "script-pod-",
+					Namespace:    ns,
 				},
 				Spec: v1.PodSpec{
 					NodeName: nodeName,
