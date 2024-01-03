@@ -9,6 +9,7 @@ import (
 	batchv1 "k8s.io/api/batch/v1"
 	v1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/utils/pointer"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -49,9 +50,21 @@ func (m *manager) RunScriptAsJob(nodeName string) error {
 					Namespace:    ns,
 				},
 				Spec: v1.PodSpec{
+					Volumes: []v1.Volume{
+						{
+							Name: "host-root", // Internal name for the volume
+
+							VolumeSource: v1.VolumeSource{
+								HostPath: &v1.HostPathVolumeSource{
+									Path: "/", // Mount the entire root file system
+								},
+							},
+						},
+					},
 					//TODO mshitrit consider whether v1.RestartPolicyOnFailure is a better choice
-					RestartPolicy: v1.RestartPolicyNever,
-					NodeName:      nodeName,
+					RestartPolicy:      v1.RestartPolicyNever,
+					NodeName:           nodeName,
+					ServiceAccountName: "customized-user-remediation-controller-manager",
 					Containers: []v1.Container{
 						{
 							Name: "script-container",
@@ -61,6 +74,15 @@ func (m *manager) RunScriptAsJob(nodeName string) error {
 								"bash",
 								"-c",
 								m.GetScript(),
+							},
+							VolumeMounts: []v1.VolumeMount{
+								{
+									Name:      "host-root",  // Reference to the volume defined in Volumes
+									MountPath: "/host-root", // Mount path within the container
+								},
+							},
+							SecurityContext: &v1.SecurityContext{
+								Privileged: pointer.Bool(true),
 							},
 						},
 					},
@@ -75,6 +97,8 @@ func (m *manager) RunScriptAsJob(nodeName string) error {
 		m.Log.Error(err, "Remediation script failed to execute")
 		return err
 	}
+	//TODO mshitrit also add indication when Job did not complete successfully
+
 	m.Log.Info("Remediation script executed successfully")
 	return nil
 }
