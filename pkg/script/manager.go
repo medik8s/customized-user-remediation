@@ -53,7 +53,6 @@ func (m *manager) RunScriptAsJob(nodeName string) error {
 					Volumes: []v1.Volume{
 						{
 							Name: "host-root", // Internal name for the volume
-
 							VolumeSource: v1.VolumeSource{
 								HostPath: &v1.HostPathVolumeSource{
 									Path: "/", // Mount the entire root file system
@@ -67,9 +66,8 @@ func (m *manager) RunScriptAsJob(nodeName string) error {
 					ServiceAccountName: "customized-user-remediation-controller-manager",
 					Containers: []v1.Container{
 						{
-							Name: "script-container",
-							//TODO mshitrit use an image that available upstream
-							Image: "registry.access.redhat.com/ubi8/ubi-minimal",
+							Name:  "script-container",
+							Image: "debian:stable-slim",
 							Command: []string{
 								"bash",
 								"-c",
@@ -77,8 +75,8 @@ func (m *manager) RunScriptAsJob(nodeName string) error {
 							},
 							VolumeMounts: []v1.VolumeMount{
 								{
-									Name:      "host-root",  // Reference to the volume defined in Volumes
-									MountPath: "/host-root", // Mount path within the container
+									Name:      "host-root", // Reference to the volume defined in Volumes
+									MountPath: "/",         // Mount path within the container
 								},
 							},
 							SecurityContext: &v1.SecurityContext{
