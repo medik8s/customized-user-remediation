@@ -17,7 +17,7 @@ import (
 type Manager interface {
 	SetScript(script string)
 	GetScript() string
-	RunScriptAsJob(name string) error
+	RunScriptAsJob(ctx context.Context, nodeName string) error
 }
 
 func NewManager(client client.Client) Manager {
@@ -34,7 +34,7 @@ type manager struct {
 	Log    logr.Logger
 }
 
-func (m *manager) RunScriptAsJob(nodeName string) error {
+func (m *manager) RunScriptAsJob(ctx context.Context, nodeName string) error {
 	//TODO mshitrit fetch the ns
 	ns := "openshift-workload-availability"
 	// Create a Job object with the provided script
@@ -91,13 +91,13 @@ func (m *manager) RunScriptAsJob(nodeName string) error {
 	}
 	m.Log.Info("Remediation script about to be executed")
 	// Create the Job
-	if err := m.Client.Create(context.Background(), job); err != nil {
+	if err := m.Client.Create(ctx, job); err != nil {
 		m.Log.Error(err, "Remediation script failed to execute")
 		return err
 	}
 	//TODO mshitrit also add indication when Job did not complete successfully
 
-	m.Log.Info("Remediation script executed successfully")
+	m.Log.Info("Job created successfully")
 	return nil
 }
 

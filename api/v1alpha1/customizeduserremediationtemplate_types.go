@@ -40,9 +40,10 @@ type CustomizedUserRemediationTemplateStatus struct {
 	// Important: Run "make" to regenerate code after modifying this file
 }
 
-//+kubebuilder:object:root=true
-//+kubebuilder:subresource:status
+// TODO mshitrit create default template
 
+// +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
 // CustomizedUserRemediationTemplate is the Schema for the customizeduserremediationtemplates API
 type CustomizedUserRemediationTemplate struct {
 	metav1.TypeMeta   `json:",inline"`

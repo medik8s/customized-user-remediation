@@ -67,7 +67,7 @@ func (r *CustomizedUserRemediationReconciler) Reconcile(ctx context.Context, req
 		return ctrl.Result{}, err
 	}
 
-	err := r.Manager.RunScriptAsJob(cur.Name)
+	err := r.Manager.RunScriptAsJob(ctx, cur.Name)
 	if err != nil {
 		return reconcile.Result{}, err
 	}
