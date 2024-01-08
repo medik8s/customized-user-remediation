@@ -2,7 +2,22 @@ apiVersion: operators.coreos.com/v1alpha1
 kind: ClusterServiceVersion
 metadata:
   annotations:
-    alm-examples: '[]'
+    alm-examples: |-
+      [
+        {
+          "apiVersion": "customized-user-remediation.medik8s.io/v1alpha1",
+          "kind": "CustomizedUserRemediationTemplate",
+          "metadata": {
+            "name": "customizeduserremediationtemplate-sample",
+            "namespace": "openshift-workload-availability"
+          },
+          "spec": {
+            "template": {
+              "spec": {}
+            }
+          }
+        }
+      ]
     capabilities: Basic Install
     createdAt: ""
     operatorframework.io/suggested-namespace: openshift-workload-availability

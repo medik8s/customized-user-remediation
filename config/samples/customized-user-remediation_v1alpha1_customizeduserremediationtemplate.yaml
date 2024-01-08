@@ -1,12 +1,8 @@
+kind: CustomizedUserRemediationTemplate
 apiVersion: customized-user-remediation.medik8s.io/v1alpha1
-kind: CustomizedScriptRemediationTemplate
 metadata:
-  labels:
-    app.kubernetes.io/name: customizedscriptremediationtemplate
-    app.kubernetes.io/instance: customizedscriptremediationtemplate-sample
-    app.kubernetes.io/part-of: customized-user-remediation
-    app.kubernetes.io/managed-by: kustomize
-    app.kubernetes.io/created-by: customized-user-remediation
-  name: customizedscriptremediationtemplate-sample
+  namespace: openshift-workload-availability
+  name: customizeduserremediationtemplate-sample
 spec:
-  # TODO(user): Add fields here
+  template:
+    spec: {}
