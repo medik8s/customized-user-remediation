@@ -66,8 +66,9 @@ func (m *manager) RunScriptAsJob(ctx context.Context, nodeName string) error {
 					ServiceAccountName: "customized-user-remediation-controller-manager",
 					Containers: []v1.Container{
 						{
-							Name:  "script-container",
-							Image: "debian:stable-slim",
+							Name: "script-container",
+							//TODO mshitrit consider allowing the image to be configurable
+							Image: "registry.access.redhat.com/ubi9/ubi-micro",
 							Command: []string{
 								"bash",
 								"-c",
