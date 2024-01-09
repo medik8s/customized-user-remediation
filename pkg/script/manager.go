@@ -2,7 +2,11 @@ package script
 
 import (
 	"context"
+	"crypto/rand"
+	"encoding/base64"
+	"fmt"
 	"sync"
+	"time"
 
 	"github.com/go-logr/logr"
 
@@ -39,6 +43,16 @@ type manager struct {
 }
 
 func (m *manager) RunScriptAsJob(ctx context.Context, nodeName string) error {
+
+	randomBytes := make([]byte, 4)
+	_, _ = rand.Read(randomBytes)
+	// Encode random bytes to a base64 string
+	randomStringLabel := base64.URLEncoding.EncodeToString(randomBytes)
+
+	uniquePodLabel := map[string]string{
+		"app": randomStringLabel,
+	}
+
 	// Create a Job object with the provided script
 	job := &batchv1.Job{
 		ObjectMeta: metav1.ObjectMeta{
@@ -50,6 +64,7 @@ func (m *manager) RunScriptAsJob(ctx context.Context, nodeName string) error {
 				ObjectMeta: metav1.ObjectMeta{
 					GenerateName: "script-pod-",
 					Namespace:    m.namespace,
+					Labels:       uniquePodLabel,
 				},
 				Spec: v1.PodSpec{
 					Volumes: []v1.Volume{
@@ -98,9 +113,16 @@ func (m *manager) RunScriptAsJob(ctx context.Context, nodeName string) error {
 		m.log.Error(err, "Remediation script failed to execute")
 		return err
 	}
-	//TODO mshitrit also add indication when Job did not complete successfully
 
 	m.log.Info("Job created successfully")
+
+	if pod, err := m.waitForPodWithLabel(uniquePodLabel); err != nil {
+		m.log.Error(err, "Job failed to create the script pod")
+		return err
+	} else {
+		m.log.Info("Job created script pod successfully", "poc name", pod.Name)
+	}
+
 	return nil
 }
 
@@ -115,4 +137,30 @@ func (m *manager) GetScript() string {
 	m.RLock()
 	defer m.RUnlock()
 	return m.script
+}
+
+func (m *manager) waitForPodWithLabel(labelSelector map[string]string) (*v1.Pod, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
+	defer cancel()
+
+	for {
+		podList := &v1.PodList{}
+		err := m.client.List(ctx, podList, client.MatchingLabels(labelSelector))
+		if err != nil {
+			return nil, fmt.Errorf("error listing Pods: %v", err)
+		}
+
+		if len(podList.Items) > 0 {
+			// Return the first pod found (assuming there's only one)
+			return &podList.Items[0], nil
+		}
+
+		// Wait for a short duration before rechecking
+		time.Sleep(1 * time.Second)
+		select {
+		case <-ctx.Done():
+			return nil, fmt.Errorf("timeout waiting for Pod with label %s", labelSelector)
+		default:
+		}
+	}
 }
