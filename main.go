@@ -36,6 +36,7 @@ import (
 
 	//+kubebuilder:scaffold:imports
 	"github.com/mshitrit/customized-user-remediation/pkg/script"
+	"github.com/mshitrit/customized-user-remediation/pkg/utils"
 )
 
 var (
@@ -91,7 +92,13 @@ func main() {
 		os.Exit(1)
 	}
 
-	scriptManager := script.NewManager(mgr.GetClient())
+	ns, err := utils.GetDeploymentNamespace()
+	if err != nil {
+		setupLog.Error(err, "failed to get deployed namespace from env var")
+		os.Exit(1)
+	}
+
+	scriptManager := script.NewManager(mgr.GetClient(), ns)
 	if err = (&controllers.CustomizedUserRemediationReconciler{
 		Client:  mgr.GetClient(),
 		Log:     ctrl.Log.WithName("controllers").WithName("CustomizedUserRemediation"),

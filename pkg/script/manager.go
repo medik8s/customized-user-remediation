@@ -20,34 +20,36 @@ type Manager interface {
 	RunScriptAsJob(ctx context.Context, nodeName string) error
 }
 
-func NewManager(client client.Client) Manager {
+func NewManager(client client.Client, namespace string) Manager {
+	managerLog := ctrl.Log.WithName("script").WithName("manager")
+	managerLog.Info("initializing manager with deployment namespace", "deployment namespace", namespace)
 	return &manager{
-		Client: client,
-		Log:    ctrl.Log.WithName("script").WithName("manager"),
+		client:    client,
+		log:       managerLog,
+		namespace: namespace,
 	}
 }
 
 type manager struct {
 	script string
 	sync.RWMutex
-	Client client.Client
-	Log    logr.Logger
+	client    client.Client
+	log       logr.Logger
+	namespace string
 }
 
 func (m *manager) RunScriptAsJob(ctx context.Context, nodeName string) error {
-	//TODO mshitrit fetch the ns
-	ns := "openshift-workload-availability"
 	// Create a Job object with the provided script
 	job := &batchv1.Job{
 		ObjectMeta: metav1.ObjectMeta{
 			GenerateName: "script-job-",
-			Namespace:    ns,
+			Namespace:    m.namespace,
 		},
 		Spec: batchv1.JobSpec{
 			Template: v1.PodTemplateSpec{
 				ObjectMeta: metav1.ObjectMeta{
 					GenerateName: "script-pod-",
-					Namespace:    ns,
+					Namespace:    m.namespace,
 				},
 				Spec: v1.PodSpec{
 					Volumes: []v1.Volume{
@@ -90,22 +92,22 @@ func (m *manager) RunScriptAsJob(ctx context.Context, nodeName string) error {
 			BackoffLimit: new(int32), // Set to 1 for retries
 		},
 	}
-	m.Log.Info("Remediation script about to be executed")
+	m.log.Info("Remediation script about to be executed")
 	// Create the Job
-	if err := m.Client.Create(ctx, job); err != nil {
-		m.Log.Error(err, "Remediation script failed to execute")
+	if err := m.client.Create(ctx, job); err != nil {
+		m.log.Error(err, "Remediation script failed to execute")
 		return err
 	}
 	//TODO mshitrit also add indication when Job did not complete successfully
 
-	m.Log.Info("Job created successfully")
+	m.log.Info("Job created successfully")
 	return nil
 }
 
 func (m *manager) SetScript(newScript string) {
 	m.Lock()
 	defer m.Unlock()
-	m.Log.Info("Remediation script updated", "previous script", m.script, "new script", newScript)
+	m.log.Info("Remediation script updated", "previous script", m.script, "new script", newScript)
 	m.script = newScript
 }
 
