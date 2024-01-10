@@ -3,8 +3,8 @@ package script
 import (
 	"context"
 	"crypto/rand"
-	"encoding/base64"
 	"fmt"
+	"math/big"
 	"sync"
 	"time"
 
@@ -44,13 +44,14 @@ type manager struct {
 
 func (m *manager) RunScriptAsJob(ctx context.Context, nodeName string) error {
 
-	randomBytes := make([]byte, 4)
-	_, _ = rand.Read(randomBytes)
-	// Encode random bytes to a base64 string
-	randomStringLabel := base64.URLEncoding.EncodeToString(randomBytes)
+	randomLabelValue, err := generateRandomLabelValue(6)
+	if err != nil {
+		m.log.Error(err, "Failed to generate label value for the script pod")
+		return err
+	}
 
 	uniquePodLabel := map[string]string{
-		"app": randomStringLabel,
+		"app": randomLabelValue,
 	}
 
 	// Create a Job object with the provided script
@@ -163,4 +164,19 @@ func (m *manager) waitForPodWithLabel(labelSelector map[string]string) (*v1.Pod,
 		default:
 		}
 	}
+}
+
+func generateRandomLabelValue(length int) (string, error) {
+	const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_."
+
+	bytes := make([]byte, length)
+	for i := range bytes {
+		n, err := rand.Int(rand.Reader, big.NewInt(int64(len(charset))))
+		if err != nil {
+			return "", err
+		}
+		bytes[i] = charset[n.Int64()]
+	}
+
+	return string(bytes), nil
 }
