@@ -20,6 +20,10 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
+const (
+	defaultTemplateName = "customized-user-remediation-default-template"
+)
+
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
@@ -39,8 +43,6 @@ type CustomizedUserRemediationTemplateStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 }
-
-// TODO mshitrit create default template
 
 // +kubebuilder:object:root=true
 // +kubebuilder:subresource:status
@@ -64,4 +66,21 @@ type CustomizedUserRemediationTemplateList struct {
 
 func init() {
 	SchemeBuilder.Register(&CustomizedUserRemediationTemplate{}, &CustomizedUserRemediationTemplateList{})
+}
+
+func NewRemediationTemplates() []*CustomizedUserRemediationTemplate {
+	templateLabels := make(map[string]string)
+	return []*CustomizedUserRemediationTemplate{
+		{
+			ObjectMeta: metav1.ObjectMeta{
+				Name:   defaultTemplateName,
+				Labels: templateLabels,
+			},
+			Spec: CustomizedUserRemediationTemplateSpec{
+				Template: CustomizedUserRemediationTemplateResource{
+					Spec: CustomizedUserRemediationSpec{},
+				},
+			},
+		},
+	}
 }

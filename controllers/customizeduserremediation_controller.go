@@ -42,6 +42,7 @@ type CustomizedUserRemediationReconciler struct {
 //+kubebuilder:rbac:groups=customized-user-remediation.medik8s.io,resources=customizeduserremediations,verbs=get;list;watch;create;update;patch;delete
 //+kubebuilder:rbac:groups=customized-user-remediation.medik8s.io,resources=customizeduserremediations/status,verbs=get;update;patch
 //+kubebuilder:rbac:groups=customized-user-remediation.medik8s.io,resources=customizeduserremediations/finalizers,verbs=update
+//+kubebuilder:rbac:groups=customized-user-remediation.medik8s.io,resources=customizeduserremediationtemplates,verbs=get;list;watch;create;update;patch;delete
 //+kubebuilder:rbac:groups=batch,resources=jobs,verbs=create;get;list;watch;update;patch;delete
 //+kubebuilder:rbac:groups="",resources=pods,verbs=create;get;list;watch;update;patch;delete
 //+kubebuilder:rbac:groups="security.openshift.io",resources=securitycontextconstraints,verbs=use,resourceNames=privileged

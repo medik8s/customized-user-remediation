@@ -8,7 +8,7 @@ metadata:
           "apiVersion": "customized-user-remediation.medik8s.io/v1alpha1",
           "kind": "CustomizedUserRemediationTemplate",
           "metadata": {
-            "name": "customizeduserremediationtemplate-sample",
+            "name": "customized-user-remediation-default-template",
             "namespace": "openshift-workload-availability"
           },
           "spec": {
@@ -121,6 +121,18 @@ spec:
           - get
           - patch
           - update
+        - apiGroups:
+          - customized-user-remediation.medik8s.io
+          resources:
+          - customizeduserremediationtemplates
+          verbs:
+          - create
+          - delete
+          - get
+          - list
+          - patch
+          - update
+          - watch
         - apiGroups:
           - security.openshift.io
           resourceNames:
