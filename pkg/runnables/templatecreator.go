@@ -10,8 +10,8 @@ import (
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
-	"github.com/mshitrit/customized-user-remediation/api/v1alpha1"
-	"github.com/mshitrit/customized-user-remediation/pkg/utils"
+	"github.com/medik8s/customized-user-remediation/api/v1alpha1"
+	"github.com/medik8s/customized-user-remediation/pkg/utils"
 )
 
 type Creator struct {

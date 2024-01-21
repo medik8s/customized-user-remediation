@@ -31,13 +31,13 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/healthz"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	customizeduserremediationv1alpha1 "github.com/mshitrit/customized-user-remediation/api/v1alpha1"
-	"github.com/mshitrit/customized-user-remediation/controllers"
-	"github.com/mshitrit/customized-user-remediation/pkg/runnables"
+	customizeduserremediationv1alpha1 "github.com/medik8s/customized-user-remediation/api/v1alpha1"
+	"github.com/medik8s/customized-user-remediation/controllers"
+	"github.com/medik8s/customized-user-remediation/pkg/runnables"
 
 	//+kubebuilder:scaffold:imports
-	"github.com/mshitrit/customized-user-remediation/pkg/script"
-	"github.com/mshitrit/customized-user-remediation/pkg/utils"
+	"github.com/medik8s/customized-user-remediation/pkg/script"
+	"github.com/medik8s/customized-user-remediation/pkg/utils"
 )
 
 var (
