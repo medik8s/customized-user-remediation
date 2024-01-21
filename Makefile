@@ -135,6 +135,10 @@ fmt: ## Run go fmt against code.
 vet: ## Run go vet against code.
 	go vet ./...
 
+.PHONY: verify-no-changes
+verify-no-changes: ## verify there are no un-staged changes
+	./hack/verify-diff.sh
+
 .PHONY: test
 test: manifests generate fmt vet envtest ## Run tests.
 	KUBEBUILDER_ASSETS="$(shell $(ENVTEST) use $(ENVTEST_K8S_VERSION) --bin-dir $(LOCALBIN) -p path)" go test ./... -coverprofile cover.out
@@ -368,6 +372,12 @@ vendor: ## Runs go mod vendor
 .PHONY: tidy
 tidy: ## Runs go mod tidy
 	go mod tidy
+
+.PHONY:verify-vendor
+verify-vendor: tidy vendor verify-no-changes ##Verifies vendor and tidy didn't cause changes
+
+.PHONY:verify-bundle
+verify-bundle: manifests bundle bundle-reset verify-no-changes ##Verifies bundle and manifests didn't cause changes
 
 # Revert all version or build date related changes
 .PHONY: bundle-reset
