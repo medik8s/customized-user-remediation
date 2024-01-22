@@ -27,8 +27,8 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 
-	customizeduserremediationv1alpha1 "github.com/mshitrit/customized-user-remediation/api/v1alpha1"
-	"github.com/mshitrit/customized-user-remediation/pkg/script"
+	customizeduserremediationv1alpha1 "github.com/medik8s/customized-user-remediation/api/v1alpha1"
+	"github.com/medik8s/customized-user-remediation/pkg/script"
 )
 
 // CustomizedUserRemediationReconciler reconciles a CustomizedUserRemediation object
