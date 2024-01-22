@@ -12,30 +12,30 @@ spec:
   apiservicedefinitions: {}
   customresourcedefinitions:
     owned:
-    - description: CustomizedScriptRemediationConfig is the Schema for the customizedscriptremediationconfigs
+    - description: CustomizedUserRemediationConfig is the Schema for the CustomizedUserremediationconfigs
         API
-      displayName: Customized Script Remediation Config
-      kind: CustomizedScriptRemediationConfig
-      name: customizedscriptremediationconfigs.customized-user-remediation.medik8s.io
+      displayName: Customized User Remediation Config
+      kind: CustomizedUserRemediationConfig
+      name: CustomizedUserremediationconfigs.customized-user-remediation.medik8s.io
       version: v1alpha1
-    - description: CustomizedScriptRemediation is the Schema for the customizedscriptremediations
+    - description: CustomizedUserRemediation is the Schema for the CustomizedUserremediations
         API
-      displayName: Customized Script Remediation
-      kind: CustomizedScriptRemediation
-      name: customizedscriptremediations.customized-user-remediation.medik8s.io
+      displayName: Customized User Remediation
+      kind: CustomizedUserRemediation
+      name: CustomizedUserremediations.customized-user-remediation.medik8s.io
       version: v1alpha1
-    - description: CustomizedScriptRemediationTemplate is the Schema for the customizedscriptremediationtemplates
+    - description: CustomizedUserRemediationTemplate is the Schema for the CustomizedUserremediationtemplates
         API
-      displayName: Customized Script Remediation Template
-      kind: CustomizedScriptRemediationTemplate
-      name: customizedscriptremediationtemplates.customized-user-remediation.medik8s.io
+      displayName: Customized User Remediation Template
+      kind: CustomizedUserRemediationTemplate
+      name: CustomizedUserremediationtemplates.customized-user-remediation.medik8s.io
       specDescriptors:
-      - description: Template defines the desired state of CustomizedScriptRemediationTemplate
+      - description: Template defines the desired state of CustomizedUserRemediationTemplate
         displayName: Template
         path: template
       version: v1alpha1
   description: TBD
-  displayName: Customized Script Remediation Operator
+  displayName: Customized User Remediation Operator
   install:
     spec:
       deployments: null
@@ -58,7 +58,7 @@ spec:
   - script
   - CUR
   links:
-  - name: Customized Script Remediation
+  - name: Customized User Remediation
     url: https://customized-user-remediation.domain
   maintainers:
   - email: medik8s@googlegroups.com

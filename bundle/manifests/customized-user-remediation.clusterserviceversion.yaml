@@ -40,7 +40,7 @@ spec:
       name: customizeduserremediationtemplates.customized-user-remediation.medik8s.io
       version: v1alpha1
   description: TBD
-  displayName: Customized Script Remediation Operator
+  displayName: Customized User Remediation Operator
   install:
     spec:
       clusterPermissions:
@@ -311,7 +311,7 @@ spec:
   - script
   - CUR
   links:
-  - name: Customized Script Remediation
+  - name: Customized User Remediation
     url: https://customized-user-remediation.domain
   maintainers:
   - email: medik8s@googlegroups.com
