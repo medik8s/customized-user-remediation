@@ -160,6 +160,10 @@ run: manifests generate fmt vet ## Run a controller from your host.
 docker-build: test ## Build docker image with the manager.
 	docker build -t ${IMG} .
 
+.PHONY: bundle-build-community
+bundle-build-community: bundle-community ## Run bundle community changes in CSV, and then build the bundle image.
+	docker build -f bundle.Dockerfile -t $(BUNDLE_IMG) .
+
 .PHONY: docker-push
 docker-push: ## Push docker image with the manager.
 	docker push ${IMG}
@@ -268,6 +272,10 @@ bundle: manifests operator-sdk kustomize ## Generate bundle manifests and metada
 	$(KUSTOMIZE) build config/manifests | envsubst | $(OPERATOR_SDK) generate bundle -q --overwrite --version $(VERSION) $(BUNDLE_METADATA_OPTS)
 	$(MAKE) bundle-validate
 
+.PHONY: bundle-community
+bundle-community: bundle ##Add Community Edition suffix to operator name
+	sed -r -i "s|displayName: Customized User Remediation Operator.*|displayName: Customized User Remediation Operator - Community Edition|;" ${BUNDLE_CSV}
+
 .PHONY: bundle-update
 bundle-update: verify-previous-version ## Update CSV fields and validate the bundle directory
 	# update container image in the metadata
@@ -356,6 +364,9 @@ catalog-build: opm ## Build a catalog image.
 .PHONY: catalog-push
 catalog-push: ## Push a catalog image.
 	$(MAKE) docker-push IMG=$(CATALOG_IMG)
+
+.PHONY: container-build-community
+container-build-community: docker-build bundle-build-community ## Build containers for community
 
 .PHONY: container-build
 container-build: docker-build bundle-build ## Build containers
