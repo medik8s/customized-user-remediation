@@ -35,6 +35,11 @@ spec:
           spec:
             description: CustomizedUserRemediationSpec defines the desired state of
               CustomizedUserRemediation
+            properties:
+              script:
+                description: Script is a user defined bash script to be run in case
+                  of remediation.
+                type: string
             type: object
           status:
             description: CustomizedUserRemediationStatus defines the observed state

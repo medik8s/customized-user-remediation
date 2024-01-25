@@ -99,21 +99,19 @@ func main() {
 		os.Exit(1)
 	}
 
-	scriptManager := script.NewManager(mgr.GetClient(), ns)
 	if err = (&controllers.CustomizedUserRemediationReconciler{
 		Client:  mgr.GetClient(),
 		Log:     ctrl.Log.WithName("controllers").WithName("CustomizedUserRemediation"),
 		Scheme:  mgr.GetScheme(),
-		Manager: scriptManager,
+		Manager: script.NewManager(mgr.GetClient(), ns),
 	}).SetupWithManager(mgr); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "CustomizedUserRemediation")
 		os.Exit(1)
 	}
 	if err = (&controllers.CustomizedUserRemediationConfigReconciler{
-		Client:  mgr.GetClient(),
-		Log:     ctrl.Log.WithName("controllers").WithName("CustomizedUserRemediationConfig"),
-		Scheme:  mgr.GetScheme(),
-		Manager: scriptManager,
+		Client: mgr.GetClient(),
+		Log:    ctrl.Log.WithName("controllers").WithName("CustomizedUserRemediationConfig"),
+		Scheme: mgr.GetScheme(),
 	}).SetupWithManager(mgr); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "CustomizedUserRemediationConfig")
 		os.Exit(1)

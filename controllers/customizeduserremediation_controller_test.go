@@ -26,6 +26,7 @@ var _ = Describe("CUR Controller", func() {
 		cur = &v1alpha1.CustomizedUserRemediation{}
 		cur.Name = unhealthyNodeName
 		cur.Namespace = testNs
+		cur.Spec.Script = userRemediationScript
 	})
 
 	JustBeforeEach(func() {

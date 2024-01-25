@@ -27,7 +27,6 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
 	customizeduserremediationv1alpha1 "github.com/medik8s/customized-user-remediation/api/v1alpha1"
-	"github.com/medik8s/customized-user-remediation/pkg/script"
 )
 
 // CustomizedUserRemediationConfigReconciler reconciles a CustomizedUserRemediationConfig object
@@ -35,7 +34,6 @@ type CustomizedUserRemediationConfigReconciler struct {
 	client.Client
 	Log    logr.Logger
 	Scheme *runtime.Scheme
-	script.Manager
 }
 
 //+kubebuilder:rbac:groups=customized-user-remediation.medik8s.io,resources=customizeduserremediationconfigs,verbs=get;list;watch;create;update;patch;delete
@@ -66,8 +64,6 @@ func (r *CustomizedUserRemediationConfigReconciler) Reconcile(ctx context.Contex
 		logger.Error(err, "failed to fetch cr")
 		return ctrl.Result{}, err
 	}
-
-	r.Manager.SetScript(config.Spec.Script)
 
 	return ctrl.Result{}, nil
 }

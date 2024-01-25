@@ -103,9 +103,8 @@ var _ = BeforeSuite(func() {
 	scriptManager := script.NewManager(k8sClient, testNs)
 	//Config Reconciler
 	err = (&CustomizedUserRemediationConfigReconciler{
-		Client:  k8sClient,
-		Log:     ctrl.Log.WithName("controllers").WithName("customized-user-remediation-config-controller"),
-		Manager: scriptManager,
+		Client: k8sClient,
+		Log:    ctrl.Log.WithName("controllers").WithName("customized-user-remediation-config-controller"),
 	}).SetupWithManager(k8sManager)
 
 	//CR Reconciler
@@ -153,6 +152,5 @@ func createConfig() {
 	curc := &v1alpha1.CustomizedUserRemediationConfig{}
 	curc.Name = "cur-test-config"
 	curc.Namespace = testNs
-	curc.Spec.Script = userRemediationScript
 	Expect(k8sClient.Create(context.TODO(), curc)).To(Succeed(), "failed to create cur config CR")
 }

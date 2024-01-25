@@ -26,9 +26,6 @@ import (
 // CustomizedUserRemediationConfigSpec defines the desired state of CustomizedUserRemediationConfig
 type CustomizedUserRemediationConfigSpec struct {
 	// Important: Run "make" to regenerate code after modifying this file
-
-	// Script is a user defined bash script to be run in case of remediation.
-	Script string `json:"script,omitempty"`
 }
 
 // CustomizedUserRemediationConfigStatus defines the observed state of CustomizedUserRemediationConfig

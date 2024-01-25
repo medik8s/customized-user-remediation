@@ -25,8 +25,10 @@ import (
 
 // CustomizedUserRemediationSpec defines the desired state of CustomizedUserRemediation
 type CustomizedUserRemediationSpec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
+
+	// Script is a user defined bash script to be run in case of remediation.
+	Script string `json:"script,omitempty"`
 }
 
 // CustomizedUserRemediationStatus defines the observed state of CustomizedUserRemediation

@@ -5,7 +5,6 @@ import (
 	"crypto/rand"
 	"fmt"
 	"math/big"
-	"sync"
 	"time"
 
 	"github.com/go-logr/logr"
@@ -16,12 +15,12 @@ import (
 	"k8s.io/utils/pointer"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
+
+	customizeduserremediationv1alpha1 "github.com/medik8s/customized-user-remediation/api/v1alpha1"
 )
 
 type Manager interface {
-	SetScript(script string)
-	GetScript() string
-	RunScriptAsJob(ctx context.Context, nodeName string) error
+	RunScriptAsJob(ctx context.Context, cur *customizeduserremediationv1alpha1.CustomizedUserRemediation) error
 }
 
 func NewManager(client client.Client, namespace string) Manager {
@@ -35,14 +34,12 @@ func NewManager(client client.Client, namespace string) Manager {
 }
 
 type manager struct {
-	script string
-	sync.RWMutex
 	client    client.Client
 	log       logr.Logger
 	namespace string
 }
 
-func (m *manager) RunScriptAsJob(ctx context.Context, nodeName string) error {
+func (m *manager) RunScriptAsJob(ctx context.Context, cur *customizeduserremediationv1alpha1.CustomizedUserRemediation) error {
 
 	randomLabelValue, err := generateRandomLabelValue(6)
 	if err != nil {
@@ -80,7 +77,7 @@ func (m *manager) RunScriptAsJob(ctx context.Context, nodeName string) error {
 					},
 					//TODO mshitrit consider whether v1.RestartPolicyOnFailure is a better choice
 					RestartPolicy:      v1.RestartPolicyNever,
-					NodeName:           nodeName,
+					NodeName:           cur.Name,
 					ServiceAccountName: "customized-user-remediation-controller-manager",
 					Containers: []v1.Container{
 						{
@@ -90,7 +87,7 @@ func (m *manager) RunScriptAsJob(ctx context.Context, nodeName string) error {
 							Command: []string{
 								"bash",
 								"-c",
-								m.GetScript(),
+								cur.Spec.Script,
 							},
 							VolumeMounts: []v1.VolumeMount{
 								{
@@ -125,19 +122,6 @@ func (m *manager) RunScriptAsJob(ctx context.Context, nodeName string) error {
 	}
 
 	return nil
-}
-
-func (m *manager) SetScript(newScript string) {
-	m.Lock()
-	defer m.Unlock()
-	m.log.Info("Remediation script updated", "previous script", m.script, "new script", newScript)
-	m.script = newScript
-}
-
-func (m *manager) GetScript() string {
-	m.RLock()
-	defer m.RUnlock()
-	return m.script
 }
 
 func (m *manager) waitForPodWithLabel(labelSelector map[string]string) (*v1.Pod, error) {
