@@ -67,20 +67,3 @@ type CustomizedUserRemediationTemplateList struct {
 func init() {
 	SchemeBuilder.Register(&CustomizedUserRemediationTemplate{}, &CustomizedUserRemediationTemplateList{})
 }
-
-func NewRemediationTemplates() []*CustomizedUserRemediationTemplate {
-	templateLabels := make(map[string]string)
-	return []*CustomizedUserRemediationTemplate{
-		{
-			ObjectMeta: metav1.ObjectMeta{
-				Name:   defaultTemplateName,
-				Labels: templateLabels,
-			},
-			Spec: CustomizedUserRemediationTemplateSpec{
-				Template: CustomizedUserRemediationTemplateResource{
-					Spec: CustomizedUserRemediationSpec{},
-				},
-			},
-		},
-	}
-}

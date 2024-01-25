@@ -33,7 +33,6 @@ import (
 
 	customizeduserremediationv1alpha1 "github.com/medik8s/customized-user-remediation/api/v1alpha1"
 	"github.com/medik8s/customized-user-remediation/controllers"
-	"github.com/medik8s/customized-user-remediation/pkg/runnables"
 
 	//+kubebuilder:scaffold:imports
 	"github.com/medik8s/customized-user-remediation/pkg/script"
@@ -114,12 +113,6 @@ func main() {
 		Scheme: mgr.GetScheme(),
 	}).SetupWithManager(mgr); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "CustomizedUserRemediationConfig")
-		os.Exit(1)
-	}
-
-	templateCreator := runnables.NewTemplateCreator(mgr.GetClient(), ctrl.Log.WithName("template creator"))
-	if err = mgr.Add(templateCreator); err != nil {
-		setupLog.Error(err, "failed to add template creator to the manager")
 		os.Exit(1)
 	}
 
