@@ -41,7 +41,7 @@ type manager struct {
 
 func (m *manager) RunScriptAsJob(ctx context.Context, cur *customizeduserremediationv1alpha1.CustomizedUserRemediation) error {
 
-	randomLabelValue, err := generateRandomLabelValue(6)
+	randomLabelValue, err := GenerateRandomLabelValue(6)
 	if err != nil {
 		m.log.Error(err, "Failed to generate label value for the script pod")
 		return err
@@ -150,7 +150,8 @@ func (m *manager) waitForPodWithLabel(labelSelector map[string]string) (*v1.Pod,
 	}
 }
 
-func generateRandomLabelValue(length int) (string, error) {
+// GenerateRandomLabelValue generates a random string compatible with label regex
+func GenerateRandomLabelValue(length int) (string, error) {
 	const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_."
 
 	bytes := make([]byte, length)
