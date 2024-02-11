@@ -5,6 +5,10 @@ CONTROLLER_GEN_VERSION = v0.13.0
 # Make sure to update /config/scorecard/patches/basic.config.yaml and /config/scorecard/patches/olm.config.yaml
 OPERATOR_SDK_VERSION = v1.32.0
 
+# See for the last version
+# Why to use the git commit sha? https://github.com/kubernetes-sigs/controller-runtime/issues/1670
+ENVTEST_VERSION ?= v0.0.0-20220407132358-188b48630db2
+
 # versions at https://github.com/kubernetes-sigs/kustomize/releases
 KUSTOMIZE_VERSION = v5.2.1
 
@@ -245,9 +249,9 @@ ifeq (,$(wildcard $(CONTROLLER_GEN)))
 endif
 
 .PHONY: envtest
-envtest: $(ENVTEST) ## Download envtest-setup locally if necessary.
-$(ENVTEST): $(LOCALBIN)
-	test -s $(LOCALBIN)/setup-envtest || GOBIN=$(LOCALBIN) go install sigs.k8s.io/controller-runtime/tools/setup-envtest@latest
+envtest: ## Download envtest-setup locally if necessary.
+	$(call go-install-tool,$(ENVTEST),sigs.k8s.io/controller-runtime/tools/setup-envtest@$(ENVTEST_VERSION)) # no tagged versions :/
+
 
 # go-install-tool will 'go install' any package $2 and install it to $1.
 define go-install-tool
