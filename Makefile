@@ -416,3 +416,8 @@ fix-imports: sort-imports ## Sort imports
 
 .PHONY: full-gen
 full-gen:  generate manifests vendor tidy bundle fix-imports bundle-reset ## generates all automatically generated content
+
+.PHONY: e2e-test
+e2e-test: ## Run end to end (E2E) tests
+    # count arg makes the test ignoring cached test results
+	go test ./e2e -ginkgo.v -ginkgo.show-node-events -test.v -timeout 30m -count=1
