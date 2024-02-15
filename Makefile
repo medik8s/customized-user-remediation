@@ -47,7 +47,7 @@ endif
 BUNDLE_METADATA_OPTS ?= $(BUNDLE_CHANNELS) $(BUNDLE_DEFAULT_CHANNEL)
 
 # IMAGE_REGISTRY used to indicate the registery/group for the operator, bundle and catalog
-IMAGE_REGISTRY ?= quay.io/mshitrit
+IMAGE_REGISTRY ?= quay.io/medik8s
 export IMAGE_REGISTRY
 
 # IMAGE_TAG_BASE defines the docker.io namespace and part of the image name for remote images.
