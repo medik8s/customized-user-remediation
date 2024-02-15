@@ -5,7 +5,7 @@ plugins:
   manifests.sdk.operatorframework.io/v2: {}
   scorecard.sdk.operatorframework.io/v2: {}
 projectName: customized-user-remediation
-repo: github.com/mshitrit/customized-user-remediation
+repo: github.com/medik8s/customized-user-remediation
 resources:
 - api:
     crdVersion: v1
@@ -14,7 +14,7 @@ resources:
   domain: medik8s.io
   group: customized-user-remediation
   kind: CustomizedScriptRemediation
-  path: github.com/mshitrit/customized-user-remediation/api/v1alpha1
+  path: github.com/medik8s/customized-user-remediation/api/v1alpha1
   version: v1alpha1
 - api:
     crdVersion: v1
@@ -23,7 +23,7 @@ resources:
   domain: medik8s.io
   group: customized-user-remediation
   kind: CustomizedScriptRemediationTemplate
-  path: github.com/mshitrit/customized-user-remediation/api/v1alpha1
+  path: github.com/medik8s/customized-user-remediation/api/v1alpha1
   version: v1alpha1
 - api:
     crdVersion: v1
@@ -32,6 +32,6 @@ resources:
   domain: medik8s.io
   group: customized-user-remediation
   kind: CustomizedScriptRemediationConfig
-  path: github.com/mshitrit/customized-user-remediation/api/v1alpha1
+  path: github.com/medik8s/customized-user-remediation/api/v1alpha1
   version: v1alpha1
 version: "3"
