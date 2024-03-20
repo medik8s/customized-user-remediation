@@ -1,12 +1,6 @@
 apiVersion: customized-user-remediation.medik8s.io/v1alpha1
 kind: CustomizedUserRemediation
 metadata:
-  labels:
-    app.kubernetes.io/name: customizeduserremediation
-    app.kubernetes.io/instance: customizeduserremediation-sample
-    app.kubernetes.io/part-of: customized-user-remediation
-    app.kubernetes.io/managed-by: kustomize
-    app.kubernetes.io/created-by: customized-user-remediation
   name: customizeduserremediation-sample
 spec:
   # TODO(user): Add fields here
