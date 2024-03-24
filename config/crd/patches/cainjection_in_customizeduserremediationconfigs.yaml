@@ -4,4 +4,4 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     cert-manager.io/inject-ca-from: $(CERTIFICATE_NAMESPACE)/$(CERTIFICATE_NAME)
-  name: customizedscriptremediationconfigs.customized-user-remediation.medik8s.io
+  name: customizeduserremediationconfigs.customized-user-remediation.medik8s.io

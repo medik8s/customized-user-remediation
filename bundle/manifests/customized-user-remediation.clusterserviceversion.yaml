@@ -6,9 +6,32 @@ metadata:
       [
         {
           "apiVersion": "customized-user-remediation.medik8s.io/v1alpha1",
+          "kind": "CustomizedUserRemediation",
+          "metadata": {
+            "labels": {
+              "app.kubernetes.io/created-by": "customized-user-remediation",
+              "app.kubernetes.io/instance": "customizeduserremediation-sample",
+              "app.kubernetes.io/managed-by": "kustomize",
+              "app.kubernetes.io/name": "customizeduserremediation",
+              "app.kubernetes.io/part-of": "customized-user-remediation"
+            },
+            "name": "customizeduserremediation-sample"
+          },
+          "spec": null
+        },
+        {
+          "apiVersion": "customized-user-remediation.medik8s.io/v1alpha1",
+          "kind": "CustomizedUserRemediationConfig",
+          "metadata": {
+            "name": "customizeduserremediationconfig-sample"
+          },
+          "spec": null
+        },
+        {
+          "apiVersion": "customized-user-remediation.medik8s.io/v1alpha1",
           "kind": "CustomizedUserRemediationTemplate",
           "metadata": {
-            "name": "customized-user-remediation-default-template",
+            "name": "customizeduserremediationtemplate-sample",
             "namespace": "openshift-workload-availability"
           },
           "spec": {
@@ -30,14 +53,27 @@ spec:
   apiservicedefinitions: {}
   customresourcedefinitions:
     owned:
-    - kind: CustomizedUserRemediationConfig
+    - description: CustomizedUserRemediationConfig is the Schema for the customizeduserremediationconfigs
+        API
+      displayName: Customized User Remediation Config
+      kind: CustomizedUserRemediationConfig
       name: customizeduserremediationconfigs.customized-user-remediation.medik8s.io
       version: v1alpha1
-    - kind: CustomizedUserRemediation
+    - description: CustomizedUserRemediation is the Schema for the customizeduserremediations
+        API
+      displayName: Customized User Remediation
+      kind: CustomizedUserRemediation
       name: customizeduserremediations.customized-user-remediation.medik8s.io
       version: v1alpha1
-    - kind: CustomizedUserRemediationTemplate
+    - description: CustomizedUserRemediationTemplate is the Schema for the customizeduserremediationtemplates
+        API
+      displayName: Customized User Remediation Template
+      kind: CustomizedUserRemediationTemplate
       name: customizeduserremediationtemplates.customized-user-remediation.medik8s.io
+      specDescriptors:
+      - description: Template defines the desired state of CustomizedUserRemediationTemplate
+        displayName: Template
+        path: template
       version: v1alpha1
   description: TBD
   displayName: Customized User Remediation Operator

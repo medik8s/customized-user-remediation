@@ -12,23 +12,23 @@ spec:
   apiservicedefinitions: {}
   customresourcedefinitions:
     owned:
-    - description: CustomizedUserRemediationConfig is the Schema for the CustomizedUserremediationconfigs
+    - description: CustomizedUserRemediationConfig is the Schema for the customizeduserremediationconfigs
         API
       displayName: Customized User Remediation Config
       kind: CustomizedUserRemediationConfig
-      name: CustomizedUserremediationconfigs.customized-user-remediation.medik8s.io
+      name: customizeduserremediationconfigs.customized-user-remediation.medik8s.io
       version: v1alpha1
-    - description: CustomizedUserRemediation is the Schema for the CustomizedUserremediations
+    - description: CustomizedUserRemediation is the Schema for the customizeduserremediations
         API
       displayName: Customized User Remediation
       kind: CustomizedUserRemediation
-      name: CustomizedUserremediations.customized-user-remediation.medik8s.io
+      name: customizeduserremediations.customized-user-remediation.medik8s.io
       version: v1alpha1
-    - description: CustomizedUserRemediationTemplate is the Schema for the CustomizedUserremediationtemplates
+    - description: CustomizedUserRemediationTemplate is the Schema for the customizeduserremediationtemplates
         API
       displayName: Customized User Remediation Template
       kind: CustomizedUserRemediationTemplate
-      name: CustomizedUserremediationtemplates.customized-user-remediation.medik8s.io
+      name: customizeduserremediationtemplates.customized-user-remediation.medik8s.io
       specDescriptors:
       - description: Template defines the desired state of CustomizedUserRemediationTemplate
         displayName: Template
