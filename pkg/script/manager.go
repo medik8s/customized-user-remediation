@@ -118,7 +118,7 @@ func (m *manager) RunScriptAsJob(ctx context.Context, cur *customizeduserremedia
 		m.log.Error(err, "Job failed to create the script pod")
 		return err
 	} else {
-		m.log.Info("Job created script pod successfully", "pod name", pod.Name)
+		m.log.Info("Job created script pod successfully", "pod name", pod.Name, "script to execute", cur.Spec.Script)
 	}
 
 	return nil
