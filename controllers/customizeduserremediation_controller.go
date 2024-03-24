@@ -20,6 +20,7 @@ import (
 	"context"
 
 	"github.com/go-logr/logr"
+	commonAnnotations "github.com/medik8s/common/pkg/annotations"
 
 	apiErrors "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -68,6 +69,11 @@ func (r *CustomizedUserRemediationReconciler) Reconcile(ctx context.Context, req
 		return ctrl.Result{}, err
 	}
 
+	if r.isStoppedByNHC(cur) {
+		r.Log.Info("NHC added the timed-out annotation, remediation will be stopped")
+		return ctrl.Result{}, nil
+	}
+
 	err := r.Manager.RunScriptAsJob(ctx, cur)
 	if err != nil {
 		return reconcile.Result{}, err
@@ -82,4 +88,12 @@ func (r *CustomizedUserRemediationReconciler) SetupWithManager(mgr ctrl.Manager)
 	return ctrl.NewControllerManagedBy(mgr).
 		For(&customizeduserremediationv1alpha1.CustomizedUserRemediation{}).
 		Complete(r)
+}
+
+func (r *CustomizedUserRemediationReconciler) isStoppedByNHC(snr *customizeduserremediationv1alpha1.CustomizedUserRemediation) bool {
+	if snr != nil && snr.Annotations != nil && snr.DeletionTimestamp == nil {
+		_, isTimeoutIssued := snr.Annotations[commonAnnotations.NhcTimedOut]
+		return isTimeoutIssued
+	}
+	return false
 }
