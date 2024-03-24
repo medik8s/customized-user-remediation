@@ -152,7 +152,7 @@ func (m *manager) waitForPodWithLabel(labelSelector map[string]string) (*v1.Pod,
 
 // GenerateRandomLabelValue generates a random string compatible with label regex
 func GenerateRandomLabelValue(length int) (string, error) {
-	const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_."
+	const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
 
 	bytes := make([]byte, length)
 	for i := range bytes {
