@@ -38,4 +38,7 @@ resources:
   kind: CustomizedUserRemediationTemplate
   path: github.com/medik8s/customized-user-remediation/api/v1alpha1
   version: v1alpha1
+  webhooks:
+    defaulting: true
+    webhookVersion: v1
 version: "3"

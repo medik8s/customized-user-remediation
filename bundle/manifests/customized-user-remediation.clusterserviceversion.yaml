@@ -351,3 +351,24 @@ spec:
     name: Medik8s
     url: https://www.medik8s.io/
   version: 0.0.1
+  webhookdefinitions:
+  - admissionReviewVersions:
+    - v1
+    containerPort: 443
+    deploymentName: customized-user-remediation-controller-manager
+    failurePolicy: Fail
+    generateName: mcustomizeduserremediationtemplate.kb.io
+    rules:
+    - apiGroups:
+      - customized-user-remediation.medik8s.io
+      apiVersions:
+      - v1alpha1
+      operations:
+      - CREATE
+      - UPDATE
+      resources:
+      - customizeduserremediationtemplates
+    sideEffects: None
+    targetPort: 9443
+    type: MutatingAdmissionWebhook
+    webhookPath: /mutate-customized-user-remediation-medik8s-io-v1alpha1-customizeduserremediationtemplate

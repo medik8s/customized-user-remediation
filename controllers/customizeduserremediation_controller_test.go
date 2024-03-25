@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"context"
+	"fmt"
 	"strings"
 	"time"
 
@@ -48,7 +49,7 @@ var _ = Describe("CUR Controller", func() {
 		Expect(node.CreationTimestamp).ToNot(BeZero())
 
 	})
-	It("check the job is created correctly on the node", func() {
+	testJob := func() {
 
 		jobs := &batchv1.JobList{}
 		Expect(k8sClient.List(context.Background(), jobs)).To(Not(HaveOccurred()))
@@ -65,7 +66,19 @@ var _ = Describe("CUR Controller", func() {
 
 		//verify that the container on the Job is running the correct script defined by th user
 		verifyContainer(scriptJob.Spec.Template.Spec.Containers[0])
+	}
+	When("node name is stored in remediation name", func() {
+		It("check the job is created correctly on the node", testJob)
 	})
+	//remediation is created from escalation remediation supporting same kind template
+	When("node name is stored in remediation's annotation", func() {
+		BeforeEach(func() {
+			cur.Name = fmt.Sprintf("%s-%s", unhealthyNodeName, "pseudo-random-test-sufix")
+			cur.Annotations = map[string]string{"remediation.medik8s.io/node-name": unhealthyNodeName}
+		})
+		It("check the job is created correctly on the node", testJob)
+	})
+
 })
 
 func deleteRemediations() {
