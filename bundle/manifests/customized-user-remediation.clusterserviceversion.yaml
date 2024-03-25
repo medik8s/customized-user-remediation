@@ -35,6 +35,7 @@ metadata:
         }
       ]
     capabilities: Basic Install
+    categories: OpenShift Optional
     createdAt: ""
     operatorframework.io/suggested-namespace: openshift-workload-availability
     operatorframework.io/suggested-namespace-template: '{"kind":"Namespace","apiVersion":"v1","metadata":{"name":"openshift-workload-availability","annotations":{"openshift.io/node-selector":""}}}'
