@@ -281,7 +281,7 @@ bundle-community: bundle ##Add Community Edition suffix to operator name
 	sed -r -i "s|displayName: Customized User Remediation Operator.*|displayName: Customized User Remediation Operator - Community Edition|;" ${BUNDLE_CSV}
 
 .PHONY: bundle-update
-bundle-update: verify-previous-version ## Update CSV fields and validate the bundle directory
+bundle-update: ## Update CSV fields and validate the bundle directory
 	# update container image in the metadata
 	sed -r -i "s|containerImage: .*|containerImage: ${IMG}|;" ${BUNDLE_CSV}
 	# set creation date
@@ -306,7 +306,7 @@ bundle-validate: operator-sdk ## Validate the bundle directory with additional v
 	$(OPERATOR_SDK) bundle validate ./bundle --select-optional suite=operatorframework
 
 .PHONY: bundle-build
-bundle-build: bundle bundle-update## Build the bundle image.
+bundle-build: bundle verify-previous-version bundle-update## Build the bundle image.
 	docker build -f bundle.Dockerfile -t $(BUNDLE_IMG) .
 
 .PHONY: bundle-push
