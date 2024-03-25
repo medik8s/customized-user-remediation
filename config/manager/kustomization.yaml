@@ -5,4 +5,4 @@ kind: Kustomization
 images:
 - name: controller
   newName: quay.io/medik8s/customized-user-remediation-operator
-  newTag: latest
+  newTag: v0.1.0
