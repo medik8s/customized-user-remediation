@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/go-logr/logr"
+	commonAnnotations "github.com/medik8s/common/pkg/annotations"
 
 	batchv1 "k8s.io/api/batch/v1"
 	v1 "k8s.io/api/core/v1"
@@ -40,6 +41,7 @@ type manager struct {
 }
 
 func (m *manager) RunScriptAsJob(ctx context.Context, cur *customizeduserremediationv1alpha1.CustomizedUserRemediation) error {
+	nodeName := getNodeName(cur)
 
 	randomLabelValue, err := GenerateRandomLabelValue(6)
 	if err != nil {
@@ -77,7 +79,7 @@ func (m *manager) RunScriptAsJob(ctx context.Context, cur *customizeduserremedia
 					},
 					//TODO mshitrit consider whether v1.RestartPolicyOnFailure is a better choice
 					RestartPolicy:      v1.RestartPolicyNever,
-					NodeName:           cur.Name,
+					NodeName:           nodeName,
 					ServiceAccountName: "customized-user-remediation-controller-manager",
 					Containers: []v1.Container{
 						{
@@ -164,4 +166,16 @@ func GenerateRandomLabelValue(length int) (string, error) {
 	}
 
 	return string(bytes), nil
+}
+
+// getNodeName checks for the node name in cur's commonAnnotations.NodeNameAnnotation if it does not exist it assumes the node name equals to far CR's name and return it.
+func getNodeName(cur *customizeduserremediationv1alpha1.CustomizedUserRemediation) string {
+	ann := cur.GetAnnotations()
+	if ann == nil {
+		return cur.GetName()
+	}
+	if nodeName, isNodeNameAnnotationExist := ann[commonAnnotations.NodeNameAnnotation]; isNodeNameAnnotationExist {
+		return nodeName
+	}
+	return cur.GetName()
 }
