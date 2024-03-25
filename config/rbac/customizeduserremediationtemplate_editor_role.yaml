@@ -1,20 +1,20 @@
-# permissions for end users to edit customizedscriptremediationtemplates.
+# permissions for end users to edit customizeduserremediationtemplates.
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   labels:
     app.kubernetes.io/name: clusterrole
-    app.kubernetes.io/instance: customizedscriptremediationtemplate-editor-role
+    app.kubernetes.io/instance: customizeduserremediationtemplate-editor-role
     app.kubernetes.io/component: rbac
     app.kubernetes.io/created-by: customized-user-remediation
     app.kubernetes.io/part-of: customized-user-remediation
     app.kubernetes.io/managed-by: kustomize
-  name: customizedscriptremediationtemplate-editor-role
+  name: customizeduserremediationtemplate-editor-role
 rules:
 - apiGroups:
   - customized-user-remediation.medik8s.io
   resources:
-  - customizedscriptremediationtemplates
+  - customizeduserremediationtemplates
   verbs:
   - create
   - delete
@@ -26,6 +26,6 @@ rules:
 - apiGroups:
   - customized-user-remediation.medik8s.io
   resources:
-  - customizedscriptremediationtemplates/status
+  - customizeduserremediationtemplates/status
   verbs:
   - get

@@ -1,6 +1,6 @@
 apiVersion: customized-user-remediation.medik8s.io/v1alpha1
-kind: CustomizedScriptRemediationConfig
+kind: CustomizedUserRemediationConfig
 metadata:
-  name: customizedscriptremediationconfig-sample
+  name: customizeduserremediationconfig-sample
 spec:
-  script: touch /host-root/var/tmp/hello.txt
+  # TODO(user): Add fields here

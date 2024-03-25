@@ -1,20 +1,20 @@
-# permissions for end users to view customizedscriptremediations.
+# permissions for end users to view customizeduserremediations.
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   labels:
     app.kubernetes.io/name: clusterrole
-    app.kubernetes.io/instance: customizedscriptremediation-viewer-role
+    app.kubernetes.io/instance: customizeduserremediation-viewer-role
     app.kubernetes.io/component: rbac
     app.kubernetes.io/created-by: customized-user-remediation
     app.kubernetes.io/part-of: customized-user-remediation
     app.kubernetes.io/managed-by: kustomize
-  name: customizedscriptremediation-viewer-role
+  name: customizeduserremediation-viewer-role
 rules:
 - apiGroups:
   - customized-user-remediation.medik8s.io
   resources:
-  - customizedscriptremediations
+  - customizeduserremediations
   verbs:
   - get
   - list
@@ -22,6 +22,6 @@ rules:
 - apiGroups:
   - customized-user-remediation.medik8s.io
   resources:
-  - customizedscriptremediations/status
+  - customizeduserremediations/status
   verbs:
   - get

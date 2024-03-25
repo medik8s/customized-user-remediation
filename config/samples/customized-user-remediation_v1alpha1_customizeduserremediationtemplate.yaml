@@ -1,8 +1,8 @@
-kind: CustomizedUserRemediationTemplate
 apiVersion: customized-user-remediation.medik8s.io/v1alpha1
+kind: CustomizedUserRemediationTemplate
 metadata:
   namespace: openshift-workload-availability
-  name: customized-user-remediation-default-template
+  name: customizeduserremediationtemplate-sample
 spec:
   template:
     spec: {}

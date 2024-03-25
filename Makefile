@@ -415,7 +415,7 @@ fix-imports: sort-imports ## Sort imports
 	$(SORT_IMPORTS) -w .
 
 .PHONY: full-gen
-full-gen:  generate manifests vendor tidy bundle fix-imports bundle-reset ## generates all automatically generated content
+full-gen:  tidy vendor generate manifests bundle fix-imports bundle-reset ## generates all automatically generated content
 
 .PHONY: e2e-test
 e2e-test: ## Run end to end (E2E) tests
