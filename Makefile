@@ -164,10 +164,6 @@ run: manifests generate fmt vet ## Run a controller from your host.
 docker-build: test ## Build docker image with the manager.
 	docker build -t ${IMG} .
 
-.PHONY: bundle-build-community
-bundle-build-community: bundle-community ## Run bundle community changes in CSV, and then build the bundle image.
-	docker build -f bundle.Dockerfile -t $(BUNDLE_IMG) .
-
 .PHONY: docker-push
 docker-push: ## Push docker image with the manager.
 	docker push ${IMG}
@@ -279,9 +275,10 @@ bundle: manifests operator-sdk kustomize ## Generate bundle manifests and metada
 .PHONY: bundle-community
 bundle-community: bundle ##Add Community Edition suffix to operator name
 	sed -r -i "s|displayName: Customized User Remediation Operator.*|displayName: Customized User Remediation Operator - Community Edition|;" ${BUNDLE_CSV}
+	$(MAKE) bundle-update
 
 .PHONY: bundle-update
-bundle-update: verify-previous-version ## Update CSV fields and validate the bundle directory
+bundle-update: ## Update CSV fields and validate the bundle directory
 	# update container image in the metadata
 	sed -r -i "s|containerImage: .*|containerImage: ${IMG}|;" ${BUNDLE_CSV}
 	# set creation date
@@ -290,8 +287,6 @@ bundle-update: verify-previous-version ## Update CSV fields and validate the bun
 	sed -r -i "s|olm.skipRange: .*|olm.skipRange: '>=0.1.0 <${VERSION}'|;" ${BUNDLE_CSV}
 	# set  replaces
 	sed -r -i "s|replaces: .*|replaces: ${OPERATOR_NAME}.v${PREVIOUS_VERSION}|;" ${BUNDLE_CSV}
-	# set icon (not version or build date related, but just to not having this huge data permanently in the CSV)
-	sed -r -i "s|base64data:.*|base64data: ${ICON_BASE64}|;" ${BUNDLE_CSV}
 	$(MAKE) bundle-validate
 
 .PHONY: verify-previous-version
@@ -306,7 +301,11 @@ bundle-validate: operator-sdk ## Validate the bundle directory with additional v
 	$(OPERATOR_SDK) bundle validate ./bundle --select-optional suite=operatorframework
 
 .PHONY: bundle-build
-bundle-build: bundle bundle-update## Build the bundle image.
+bundle-build: bundle verify-previous-version bundle-update## Build the bundle image.
+	docker build -f bundle.Dockerfile -t $(BUNDLE_IMG) .
+
+.PHONY: bundle-build-community
+bundle-build-community: bundle-community ## Run bundle community changes in CSV, and then build the bundle image.
 	docker build -f bundle.Dockerfile -t $(BUNDLE_IMG) .
 
 .PHONY: bundle-push
