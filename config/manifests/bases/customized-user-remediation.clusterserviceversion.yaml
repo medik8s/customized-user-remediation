@@ -6,8 +6,14 @@ metadata:
     capabilities: Basic Install
     categories: OpenShift Optional
     containerImage: ""
+    description: Customized-user-remediation works with Node Health Check to remediate
+      unhealthy nodes by running a user customized script on the unhealthy node. This
+      operator does not preform any fencing on the remediated node so users should
+      be careful with the scripts that are being used.
     operatorframework.io/suggested-namespace: openshift-workload-availability
     operatorframework.io/suggested-namespace-template: '{"kind":"Namespace","apiVersion":"v1","metadata":{"name":"openshift-workload-availability","annotations":{"openshift.io/node-selector":""}}}'
+    repository: https://github.com/medik8s/customized-user-remediation
+    support: Medik8s
   name: customized-user-remediation.v0.0.0
   namespace: placeholder
 spec:
