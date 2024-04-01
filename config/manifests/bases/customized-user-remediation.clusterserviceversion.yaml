@@ -84,7 +84,9 @@ spec:
   - Medik8s
   links:
   - name: Customized User Remediation
-    url: https://customized-user-remediation.domain
+    url: https://medik8s.io
+  - name: Source Code
+    url: https://github.com/medik8s/customized-user-remediation
   maintainers:
   - email: medik8s@googlegroups.com
     name: Medik8s Team
