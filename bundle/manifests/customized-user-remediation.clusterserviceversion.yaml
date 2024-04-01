@@ -362,6 +362,8 @@ spec:
   - baremetal
   - script
   - CUR
+  - customized-user-remediation
+  - Medik8s
   links:
   - name: Customized User Remediation
     url: https://customized-user-remediation.domain
