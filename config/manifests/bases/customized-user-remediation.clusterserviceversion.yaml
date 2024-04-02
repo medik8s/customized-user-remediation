@@ -79,9 +79,9 @@ spec:
   - high-availability
   - baremetal
   - script
-  - CUR
+  - cur
   - customized-user-remediation
-  - Medik8s
+  - medik8s
   links:
   - name: Customized User Remediation
     url: https://medik8s.io
