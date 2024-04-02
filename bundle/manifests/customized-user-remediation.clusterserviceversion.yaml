@@ -38,10 +38,16 @@ metadata:
     categories: OpenShift Optional
     containerImage: ""
     createdAt: ""
+    description: Customized User Remediation Operator will remediate unhealthy nodes
+      by running a pre defined user script on the unhealthy node. Since the user has
+      full control over the script content, is may be quite risky so apply discretion.
+    olm.skipRange: '>=0.0.1'
     operatorframework.io/suggested-namespace: openshift-workload-availability
     operatorframework.io/suggested-namespace-template: '{"kind":"Namespace","apiVersion":"v1","metadata":{"name":"openshift-workload-availability","annotations":{"openshift.io/node-selector":""}}}'
     operators.operatorframework.io/builder: operator-sdk-v1.32.0
     operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+    repository: https://github.com/medik8s/customized-user-remediation
+    support: Medik8s
   name: customized-user-remediation.v0.0.1
   namespace: placeholder
 spec:
@@ -70,7 +76,19 @@ spec:
         displayName: Template
         path: template
       version: v1alpha1
-  description: TBD
+  description: |
+    ### Introduction
+    Customized User Remediation (CUR) works with Node Health Check to remediate unhealthy nodes by running a user customized script on the unhealthy node.
+    This operator does not preform any fencing on the remediated node so users should be careful with the scripts that are being used.
+
+    ### Compatibility
+    CUR is one of the remediator operators by [Medik8s](https://www.medik8s.io/remediation/remediation/),
+    such as [Self Node Remediation](https://github.com/medik8s/self-node-remediation), [Fence Agents Remediation](https://github.com/medik8s/fence-agents-remediation)  and [Machine Deletion Remediation](https://github.com/medik8s/machine-deletion-remediation),
+    that were designed to run with the Node HealthCheck Operator [(NHC)](https://github.com/medik8s/node-healthcheck-operator) which detects an unhealthy node and creates remediation CR.
+    It is recommended to use FAR with NHC for an easier and smoother experience by fully automating the remediation process, but it can be used as a standalone remediator for the more experienced user.
+
+    ### Advantages
+    - Flexibility - CUR is quite flexible since it's remediation process is a user-customized script.
   displayName: Customized User Remediation Operator
   icon:
   - base64data: PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTguNTEgMjU4LjUxIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2QxZDFkMTt9LmNscy0ye2ZpbGw6IzhkOGQ4Zjt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPkFzc2V0IDQ8L3RpdGxlPjxnIGlkPSJMYXllcl8yIiBkYXRhLW5hbWU9IkxheWVyIDIiPjxnIGlkPSJMYXllcl8xLTIiIGRhdGEtbmFtZT0iTGF5ZXIgMSI+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTI5LjI1LDIwQTEwOS4xLDEwOS4xLDAsMCwxLDIwNi40LDIwNi40LDEwOS4xLDEwOS4xLDAsMSwxLDUyLjExLDUyLjExLDEwOC40NSwxMDguNDUsMCwwLDEsMTI5LjI1LDIwbTAtMjBoMEM1OC4xNiwwLDAsNTguMTYsMCwxMjkuMjVIMGMwLDcxLjA5LDU4LjE2LDEyOS4yNiwxMjkuMjUsMTI5LjI2aDBjNzEuMDksMCwxMjkuMjYtNTguMTcsMTI5LjI2LTEyOS4yNmgwQzI1OC41MSw1OC4xNiwyMDAuMzQsMCwxMjkuMjUsMFoiLz48cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0xNzcuNTQsMTAzLjQxSDE0MS42NkwxNTQuOSw2NS43NmMxLjI1LTQuNC0yLjMzLTguNzYtNy4yMS04Ljc2SDEwMi45M2E3LjMyLDcuMzIsMCwwLDAtNy40LDZsLTEwLDY5LjYxYy0uNTksNC4xNywyLjg5LDcuODksNy40LDcuODloMzYuOUwxMTUuNTUsMTk3Yy0xLjEyLDQuNDEsMi40OCw4LjU1LDcuMjQsOC41NWE3LjU4LDcuNTgsMCwwLDAsNi40Ny0zLjQ4TDE4NCwxMTMuODVDMTg2Ljg2LDEwOS4yNCwxODMuMjksMTAzLjQxLDE3Ny41NCwxMDMuNDFaIi8+PC9nPjwvZz48L3N2Zz4=
@@ -343,10 +361,14 @@ spec:
   - high-availability
   - baremetal
   - script
-  - CUR
+  - cur
+  - customized-user-remediation
+  - medik8s
   links:
   - name: Customized User Remediation
-    url: https://customized-user-remediation.domain
+    url: https://medik8s.io
+  - name: Source Code
+    url: https://github.com/medik8s/customized-user-remediation
   maintainers:
   - email: medik8s@googlegroups.com
     name: Medik8s Team
