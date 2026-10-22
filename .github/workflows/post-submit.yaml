@@ -1,0 +1,21 @@
+name: Publish Container Images
+on:
+  push:
+    branches:
+      - main
+      - 'release-*'
+      - 'medik8s-*'
+    tags:
+      - '**'
+
+permissions:
+  contents: read
+
+jobs:
+  push_to_registry:
+    uses: medik8s/.github/.github/workflows/post_submit.yaml@main
+    with:
+      make_targets: container-build-community container-push
+    secrets:
+      QUAY_USERNAME: ${{ secrets.QUAY_USERNAME }}
+      QUAY_PASSWORD: ${{ secrets.QUAY_PASSWORD }}
